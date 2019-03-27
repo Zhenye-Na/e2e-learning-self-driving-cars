@@ -1,0 +1,40 @@
+GOOGLENET
+=========
+$ python pi_deep_learning.py --prototxt models/bvlc_googlenet.prototxt --model models/bvlc_googlenet.caffemodel --labels synset_words.txt --image images/barbershop.png
+[INFO] loading model...
+[INFO] classification took 1.7304 seconds
+[INFO] 1. label: barbershop, probability: 0.70508
+[INFO] 2. label: barber chair, probability: 0.29491
+[INFO] 3. label: restaurant, probability: 2.9732e-06
+[INFO] 4. label: desk, probability: 2.06e-06
+[INFO] 5. label: rocking chair, probability: 1.7565e-06
+
+
+SQUEEZENET
+==========
+$ python pi_deep_learning.py --prototxt models/squeezenet_v1.0.prototxt --model models/squeezenet_v1.0.caffemodel --labels synset_words.txt --image images/barbershop.png 
+[INFO] loading model...
+[INFO] classification took 0.92073 seconds
+[INFO] 1. label: barbershop, probability: 0.80578
+[INFO] 2. label: barber chair, probability: 0.15124
+[INFO] 3. label: half track, probability: 0.0052873
+[INFO] 4. label: restaurant, probability: 0.0040124
+[INFO] 5. label: desktop computer, probability: 0.0033352
+
+$ python pi_deep_learning.py --prototxt models/squeezenet_v1.0.prototxt --model models/squeezenet_v1.0.caffemodel --labels synset_words.txt --image images/cobra.png 
+[INFO] loading model...
+[INFO] classification took 0.91687 seconds
+[INFO] 1. label: Indian cobra, probability: 0.47972
+[INFO] 2. label: leatherback turtle, probability: 0.16858
+[INFO] 3. label: water snake, probability: 0.10558
+[INFO] 4. label: common iguana, probability: 0.059227
+[INFO] 5. label: sea snake, probability: 0.046393
+
+$ python pi_deep_learning.py --prototxt models/squeezenet_v1.0.prototxt --model models/squeezenet_v1.0.caffemodel --labels synset_words.txt --image images/jellyfish.png 
+[INFO] loading model...
+[INFO] classification took 0.92117 seconds
+[INFO] 1. label: bubble, probability: 0.59491
+[INFO] 2. label: jellyfish, probability: 0.23758
+[INFO] 3. label: Petri dish, probability: 0.13345
+[INFO] 4. label: lemon, probability: 0.012629
+[INFO] 5. label: dough, probability: 0.0025394
