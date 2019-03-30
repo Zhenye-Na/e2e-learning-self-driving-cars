@@ -1,4 +1,4 @@
-# Self-driving car using Machine Learning
+# Self-driving Vehicles Simulation using Machine Learning
 
 <p align="center">
   <img src="./img/driverless-car.png" width="10%">
@@ -9,20 +9,17 @@
 
 ## Table of Contents
 
-- Introduction
-- Prerequisite
-- Usage
-- Demo videos
-- Project guide
-- d
-- d
-- d
-- d
-- dd
-- d
-- FAQ
-- References
-
+- [Introduction](#introduction)
+- [Prerequisite](#prerequisite)
+- [Usage](#usage)
+- [Demo videos](#demo-videos)
+- [Project guide](#project-guide)
+    - [1. Prepare training data](#1-prepare-training-data)
+    - [2. Project code structure](#2-project-code-structure)
+    - [3. Model architecture](#3-model-architecture)
+    - [4. Test model performance](#4-test-model-performance)
+- [FAQ](#faq)
+- [References](#references)
 
 
 
@@ -37,10 +34,10 @@ We will use Python as the primary programming language and [PyTorch](https://pyt
 
 
 [1] Self-driving car simulator developed by [Udacity](https://www.udacity.com/course/self-driving-car-engineer-nanodegree--nd013) with Unity. Download [here](https://github.com/udacity/self-driving-car-sim)  
-[2] Install [PyTorch environment](https://pytorch.org/get-started/locally/) in your local machine.
-[2] Training data for [track 1]() and [track 2]().  
-[3] [Google Colab]() (if you do not have GPU and would love to utilize the power of GPU, please use Colab and be sure to enable `GPU` as accelerator)  
-[4] Reference paper by Nvidia research: [End to End Learning for Self-Driving Cars](https://arxiv.org/pdf/1604.07316v1.pdf)
+[2] Install [PyTorch environment](https://pytorch.org/get-started/locally/) in your local machine.  
+[3] Training data for [track 1]() and [track 2]().  
+[4] [Google Colab]() (if you do not have GPU and would love to utilize the power of GPU, please use Colab and be sure to enable `GPU` as accelerator)  
+[5] Reference paper by Nvidia research: [End to End Learning for Self-Driving Cars](https://arxiv.org/pdf/1604.07316v1.pdf)
 
 
 ## Usage
