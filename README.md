@@ -27,7 +27,7 @@
 
 ## Introduction
 
-Self-driving vehicles is the most hottest and interesting topics of research and business nowadays. More and more giant company has jumped into this area. In this project, I will show you the power of Deep Neural Network on this field.
+Self-driving vehicles is the most hottest and interesting topics of research and business nowadays. More and more giant companies have jumped into this area. In this project, I will show you the power of Deep Neural Network in this field.
 
 
 
