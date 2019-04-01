@@ -7,6 +7,7 @@
 > Please install [Open in Colab](https://chrome.google.com/webstore/detail/open-in-colab/iogfkhleblhcpcekbiedikdehleodpjo) extension in Google Chrome in order to open a Github-hosted notebook in Google Colab with one-click.
 
 
+
 ## Table of Contents
 
 - [Introduction](#introduction)
@@ -16,8 +17,9 @@
 - [Project guide](#project-guide)
     - [1. Prepare training data](#1-prepare-training-data)
     - [2. Project code structure](#2-project-code-structure)
-    - [3. Model architecture](#3-model-architecture)
-    - [4. Test model performance](#4-test-model-performance)
+    - [3. Training neural network](#3-training-neural-network)
+    - [4. Model architecture](#4-model-architecture)
+    - [5. Test model performance](#5-test-model-performance)
 - [FAQ](#faq)
 - [References](#references)
 
@@ -28,16 +30,17 @@
 Self-driving vehicles is the most hottest and interesting topics of research and business nowadays. More and more giant company has jumped into this area. In this project, I will show you the power of Deep Neural Network on this field.
 
 
+
 ## Prerequisite
 
-We will use Python as the primary programming language and [PyTorch](https://pytorch.org/) as the Deep Learning framework
+We will use Python as the primary programming language and [PyTorch](https://pytorch.org/) as the Deep Learning framework. Other resources / software / library could be found as follows.
 
 
 [1] Self-driving car simulator developed by [Udacity](https://www.udacity.com/course/self-driving-car-engineer-nanodegree--nd013) with Unity. Download [here](https://github.com/udacity/self-driving-car-sim)  
 [2] Install [PyTorch environment](https://pytorch.org/get-started/locally/) in your local machine.  
-[3] Training data for [track 1]() and [track 2]().  
-[4] [Google Colab]() (if you do not have GPU and would love to utilize the power of GPU, please use Colab and be sure to enable `GPU` as accelerator)  
-[5] Reference paper by Nvidia research: [End to End Learning for Self-Driving Cars](https://arxiv.org/pdf/1604.07316v1.pdf)
+[3] Register account in [Google Colab](https://colab.research.google.com/) (if you do not have GPU and would love to utilize the power of GPU, please try this and be sure to enable `GPU` as accelerator)  
+[4] Nvidia research paper: [End to End Learning for Self-Driving Cars](https://arxiv.org/pdf/1604.07316v1.pdf)  
+[5] Training data for [track 1]() and [track 2]() (Optional).  
 
 
 ## Usage
@@ -57,7 +60,7 @@ We will use Python as the primary programming language and [PyTorch](https://pyt
     python3 drive.py model.h5 
     ```
 
-3. Allow to accept incoming network connections.
+3. Click **`Allow`** to accept incoming network connections for python scripts.
 
 
 
@@ -93,7 +96,8 @@ Click **`RECORD`** button on the right corner and select a directory as the fold
 Click **`RECORD`** again and move your car smoothly and carefully.
 
 
-The training data will be stored in the folder you selected. 
+After you have complete recording your move, the training data will be stored in the folder you selected. Here I suggest you record at least 3 laps of the race. The first lap of race, please try best to stay at the center of the road, the rest could be either on the left hand side and right hand side of the road separately.
+
 
 - `/IMG/` - contains training images from three directions of the car - center image, left image and right image.
 - `driving_log.csv` - save the image name information and corresponding information like steer angle, current speed at that time.
@@ -106,16 +110,29 @@ The training data will be stored in the folder you selected.
 pass
 
 
-### 3. Model architecture
+### 3. Training neural network
 
-
+<p align="center">
+  <img src="./img/training.png" width="80%">
+</p><br>
 
 pass
 
 
-### 4. Test model performance
+
+### 4. Model architecture
+
+<p align="center">
+  <img src="./img/model-achitecture.png" width="80%">
+</p><br>
+
+pass
 
 
+
+### 5. Test model performance
+
+After training process, use the saved model and `drive.py` file to test your model performance in the simulator. Remeber to select **`AUTONOMOUS MODE`**.
 
 ```sh
 python3 drive.py model.h5 
@@ -129,7 +146,17 @@ python3 drive.py model.h5
 ### `AttributeError: Can't get attribute '_rebuild_parameter'`
 
 
-This error means that you are trying to load a newer version of model checkpoint in an older version of PyTorch. For Google Colab users, please try to first get your PyTorch version in your local machine and install the same version on Colab virtual machine using the following snippets, PyTorch `0.4.1`, for example.
+This error means that you are trying to load a newer version of model checkpoint in an older version of PyTorch.
+
+Check your PyTorch version:
+
+```python
+import pytorch
+print(torch.__version__)
+```
+
+
+For Google Colab users, please try to first get your PyTorch version in your local machine and install the same version on Colab virtual machine using the following snippets, PyTorch `0.4.1`, for example.
 
 ```python
 # http://pytorch.org/
