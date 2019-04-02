@@ -12,14 +12,19 @@
 
 - [Introduction](#introduction)
 - [Prerequisite](#prerequisite)
+- [Dataset](#dataset)
 - [Usage](#usage)
-- [Demo videos](#demo-videos)
+    - [Training](#training)
+        - [Local machine](#local-machine)
+        - [Google Colab host](#google-colab-host)
+    - [Evaluation](#evaluation)
 - [Project guide](#project-guide)
     - [1. Prepare training data](#1-prepare-training-data)
     - [2. Project code structure](#2-project-code-structure)
     - [3. Training neural network](#3-training-neural-network)
-    - [4. Model architecture](#4-model-architecture)
-    - [5. Test model performance](#5-test-model-performance)
+    - [4. Model architecture and hyper-parameters](#4-model-architecture)
+        - [Model architecture](#model-architecture)
+        - [Hyper-parameters]()
 - [FAQ](#faq)
 - [References](#references)
 
@@ -40,7 +45,12 @@ We will use Python as the primary programming language and [PyTorch](https://pyt
 2. Install [PyTorch environment](https://pytorch.org/get-started/locally/) in your local machine.
 3. Register account in [Google Colab](https://colab.research.google.com/) (if you do not have GPU and would love to utilize the power of GPU, please try this and be sure to enable `GPU` as accelerator)
 4. Nvidia research paper: [End to End Learning for Self-Driving Cars](https://arxiv.org/pdf/1604.07316v1.pdf)
-5. (Optional) Training data for [track 1]() and [track 2]().  
+
+
+## Dataset
+
+I have already uploaded training data (including track 1 and track 2 individually). Feel free to download it [here]().
+
 
 
 ## Usage
@@ -48,11 +58,11 @@ We will use Python as the primary programming language and [PyTorch](https://pyt
 Download this repo.
 
 
-    ```sh
-    git clone https://github.com/Zhenye-Na/self-driving-vehicles-sim-with-ml.git
+```
+git clone https://github.com/Zhenye-Na/self-driving-vehicles-sim-with-ml.git
     
-    cd self-driving-vehicles-sim-with-ml/src
-    ```
+cd self-driving-vehicles-sim-with-ml/src
+```
 
 
 ### Training
@@ -94,23 +104,17 @@ python3 main.py --epochs=50 --resume=True
 ```
 
 
-#### Google Colab
+#### Google Colab host
 
-if you prefer to use Colab as training platform, feel free to use [`train_in_colab.ipynb`](./src/train_in_colab.ipynb) script to train.
+if you prefer to use Colab as training platform, feel free to use [`train_in_colab.ipynb`](./src/train_in_colab.ipynb) script. Make sure you have already uploaded training data to Google Drive.
 
 
 
 ### Evaluation
 
-1. (Optional) Download [`model.h5`]() first.
+After training process, use the saved model and `drive.py` file to test your model performance in the simulator. Remeber to select **`AUTONOMOUS MODE`**.
 
-2. Type the following snippet in your terminal and open the Self-driving car simulator beforehand.
-
-    ```sh
-    python3 drive.py model.h5 
-    ```
-
-3. Click **`Allow`** to accept incoming network connections for python scripts.
+Download [`model.h5`]() or use your own pre-trained model and click **`Allow`** to accept incoming network connections for python scripts.
 
 
 ```
@@ -128,11 +132,18 @@ optional arguments:
 ```
 
 
+An example of test usage is shown as follows:
+
+```
+python drive.py --model model.h5
+```
+
+
 ## Project guide
 
 ### 1. Prepare training data
 
-Once you install the self-driving car simulator, you will find there are 2 different tracks in the simulator. The second (right-hand side) one is much harder to train. Please choose the terrain you like first and make sure that you select **`TRAINING MODE`**. 
+Once you have installed the self-driving car simulator, you will find there are 2 different tracks in the simulator. The second one is much harder to deal with. Please choose the terrain you like and make sure that you select **`TRAINING MODE`**. 
 
 <p align="center">
   <img src="./img/main-menu.png" width="80%">
@@ -153,7 +164,7 @@ Click **`RECORD`** button on the right corner and select a directory as the fold
 Click **`RECORD`** again and move your car smoothly and carefully.
 
 
-After you have complete recording your move, the training data will be stored in the folder you selected. Here I suggest you record at least 3 laps of the race. The first lap of race, please try best to stay at the center of the road, the rest could be either on the left hand side and right hand side of the road separately.
+After you have completed recording your move, the training data will be stored in the folder you selected. Here I suggest you record at least 3 laps of the race. The first lap of race, please try best to stay at the center of the road, the rest could be either on the left hand side and right hand side of the road separately.
 
 
 - `/IMG/` - recorded images from cneter, left and right cameras.
@@ -187,7 +198,10 @@ pass
   <img src="./img/training-config.png" width="80%">
 </p><br>
 
-### 4. Model architecture
+### 4. Model architecture and hyper-parameters
+
+
+#### Model architecture
 
 <p align="center">
   <img src="./img/model-achitecture.png" width="80%">
@@ -211,14 +225,9 @@ NVIDIA model used
 ```
 
 
+#### Hyper-parameters
 
-### 5. Test model performance
-
-After training process, use the saved model and `drive.py` file to test your model performance in the simulator. Remeber to select **`AUTONOMOUS MODE`**.
-
-```sh
-python3 drive.py model.h5 
-```
+pass
 
 
 
