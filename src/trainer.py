@@ -15,9 +15,22 @@ class Trainer(object):
                  optimizer,
                  start_epoch,
                  learning_rate,
-                 training_generator,
-                 validation_generator):
-        """Trainer with generator BUilder."""
+                 trainloader,
+                 validationloader):
+        """Trainer with generator Builder.
+
+        Args:
+            model:
+            device:
+            epochs:
+            criterion:
+            optimizer:
+            start_epoch:
+            learning_rate:
+            trainloader:
+            validationloader:
+
+        """
         super(Trainer, self).__init__()
 
         self.model = model
@@ -27,8 +40,8 @@ class Trainer(object):
         self.optimizer = optimizer
         self.start_epoch = start_epoch
         self.learning_rate = learning_rate
-        self.training_generator = training_generator
-        self.validation_generator = validation_generator
+        self.trainloader = trainloader
+        self.validationloader = validationloader
 
     def train(self):
         """Training process."""
@@ -40,7 +53,7 @@ class Trainer(object):
             train_loss = 0.0
             self.model.train()
 
-            for local_batch, (centers, lefts, rights) in enumerate(self.training_generator):
+            for local_batch, (centers, lefts, rights) in enumerate(self.trainloader):
                 # Transfer to GPU
                 centers, lefts, rights = toDevice(centers, self.device), toDevice(
                     lefts, self.device), toDevice(rights, self.device)
@@ -60,14 +73,13 @@ class Trainer(object):
 
                 if local_batch % 100 == 0:
 
-                    print("Training Epoch: {} | Loss: {}".format(
-                        epoch, train_loss / (local_batch + 1)))
+                    print("Training Epoch: {} | Loss: {}".format(epoch, train_loss / (local_batch + 1)))
 
             # Validation
             self.model.eval()
             valid_loss = 0
             with torch.set_grad_enabled(False):
-                for local_batch, (centers, lefts, rights) in enumerate(self.validation_generator):
+                for local_batch, (centers, lefts, rights) in enumerate(self.validationloader):
                     # Transfer to GPU
                     centers, lefts, rights = toDevice(centers, self.device), toDevice(
                         lefts, self.device), toDevice(rights, self.device)
@@ -83,5 +95,4 @@ class Trainer(object):
                         valid_loss += loss.data.item()
 
                     if local_batch % 100 == 0:
-                        print("Validation Loss: {}\n".format(
-                            valid_loss / (local_batch + 1)))
+                        print("Validation Loss: {}\n".format(valid_loss / (local_batch + 1)))

@@ -1,20 +1,15 @@
 """Main pipeline of Self-driving car training."""
 
-import csv
+import argparse
+
 import torch
 import torch.nn as nn
 import torch.optim as optim
-import torchvision.transforms as transforms
 
-
-import argparse
-
-from torch.utils import data
-from torch.utils.data import DataLoader
 
 from model import NetworkLight
-from RcCarDataset import Dataset
 from trainer import Trainer
+from utils import load_data, data_loader
 
 
 def parse_args():
@@ -22,25 +17,22 @@ def parse_args():
     parser = argparse.ArgumentParser()
 
     # directory
-    parser.add_argument('--dataroot', type=str,
-                        default="../track_2_data/", help='path to dataset')
-    parser.add_argument('--ckptroot', type=str,
-                        default="../model/", help='path to checkpoint')
+    parser.add_argument('--dataroot',     type=str,   default="../data/", help='path to dataset')
+    parser.add_argument('--ckptroot',     type=str,   default="./",       help='path to checkpoint')
 
     # hyperparameters settings
-    parser.add_argument('--lr', type=float, default=0.0001,
-                        help='learning rate')
-    parser.add_argument('--weight_decay', type=float,
-                        default=1e-5, help='weight decay (L2 penalty)')
+    parser.add_argument('--lr',           type=float, default=0.0001,     help='learning rate')
+    parser.add_argument('--weight_decay', type=float, default=1e-5,       help='weight decay (L2 penalty)')
+    parser.add_argument('--batch_size',   type=int,   default=32,         help='training batch size')
+    parser.add_argument('--num_workers',  type=int,   default=8,          help='number of workers in dataloader')
+    parser.add_argument('--test_size',    type=float, default=0.8,        help='train validation set split ratio')
+    parser.add_argument('--shuffle',      type=bool,  default=True,       help='whether shuffle data during training')
+    # parser.add_argument('--p',            type=float, default=0.25,       help='probability of an element to be zeroed')
 
     # training settings
-    parser.add_argument('--epochs', type=int, default=25,
-                        help='number of epochs to train')
-    parser.add_argument('--start_epoch', type=int,
-                        default=0, help='pre-trained epochs')
-
-    parser.add_argument('--resume', type=bool, default=False,
-                        help='whether re-training from ckpt')
+    parser.add_argument('--epochs',       type=int,   default=40,         help='number of epochs to train')
+    parser.add_argument('--start_epoch',  type=int,   default=0,          help='pre-trained epochs')
+    parser.add_argument('--resume',       type=bool,  default=False,      help='whether re-training from ckpt')
 
     # parse the arguments
     args = parser.parse_args()
@@ -49,42 +41,58 @@ def parse_args():
 
 
 def main():
-    """Main function."""
+    """Main pipeline."""
     args = parse_args()
 
-    # Read from the log file
-    samples = []
-    with open(args.dataroot + "driving_log.csv") as csvfile:
-        reader = csv.reader(csvfile)
-        next(reader, None)
-        for line in reader:
-            samples.append(line)
+    # load trainig set and split
+    trainset, valset = load_data(args.dataroot, args.test_size)
 
-    # Divide the data into training set and validation set
-    train_len = int(0.8 * len(samples))
-    valid_len = len(samples) - train_len
-    train_samples, validation_samples = data.random_split(
-        samples, lengths=[train_len, valid_len])
+    # ------------------ Oringinally ------------------
+
+    # samples = []
+    # with open(args.dataroot + "driving_log.csv") as csvfile:
+    #     reader = csv.reader(csvfile)
+    #     next(reader, None)
+    #     for line in reader:
+    #         samples.append(line)
+
+    # # Divide the data into training set and validation set
+    # train_len = int(0.8 * len(samples))
+    # valid_len = len(samples) - train_len
+    # train_samples, validation_samples = data.random_split(
+    #     samples, lengths=[train_len, valid_len])
+
+    # ------------------ Oringinally ------------------
 
     # Creating generator using the dataloader to parallasize the process
-    transformations = transforms.Compose(
-        [transforms.Lambda(lambda x: (x / 255.0) - 0.5)])
+    # transformations = transforms.Compose(
+    #     [transforms.Lambda(lambda x: (x / 127.5) - 1.0)])
 
-    params = {
-        'batch_size': 32,
-        'shuffle': True,
-        'num_workers': 4
-    }
+    # # Load training data and validation data
+    # training_set = TripletDataset(train_set, transformations)
+    # training_generator = DataLoader(training_set,
+    #                                 batch_size=args.batch_size,
+    #                                 shuffle=args.shuffle,
+    #                                 num_workers=args.num_workers)
 
-    training_set = Dataset(train_samples, transformations)
-    training_generator = DataLoader(training_set, **params)
+    # validation_set = TripletDataset(val_set, transformations)
+    # validation_generator = DataLoader(validation_set,
+    #                                   batch_size=args.batch_size,
+    #                                   shuffle=args.shuffle,
+    #                                   num_workers=args.num_workers)
 
-    validation_set = Dataset(validation_samples, transformations)
-    validation_generator = DataLoader(validation_set, **params)
+    # ------------------ Oringinally ------------------
 
+    trainloader, validationloader = data_loader(args.dataroot,
+                                                trainset, valset,
+                                                args.batch_size,
+                                                args.shuffle,
+                                                args.num_workers)
+
+    # Define model
     model = NetworkLight()
 
-    # Define optimizer
+    # Define optimizer and criterion
     optimizer = optim.Adam(model.parameters(),
                            lr=args.lr,
                            weight_decay=args.weight_decay)
@@ -92,8 +100,6 @@ def main():
     criterion = nn.MSELoss()
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    print('device is: ', device)
-
     trainer = Trainer(model,
                       device,
                       args.epochs,
@@ -101,8 +107,8 @@ def main():
                       optimizer,
                       args.start_epoch,
                       args.lr,
-                      training_generator,
-                      validation_generator)
+                      trainloader,
+                      validationloader)
     trainer.train()
 
     # Define state and save the model wrt to state
@@ -110,7 +116,7 @@ def main():
         'model': model.module if device == 'cuda' else model,
     }
 
-    torch.save(state, 'model.h5')
+    torch.save(state, args.ckptroot + 'model.h5')
 
 
 if __name__ == '__main__':

@@ -26,7 +26,7 @@ model = None
 prev_image_array = None
 
 transformations = transforms.Compose(
-    [transforms.Lambda(lambda x: (x / 255.0) - 0.5)])
+    [transforms.Lambda(lambda x: (x / 127.5) - 1.0)])
 
 
 class SimplePIController:
@@ -51,22 +51,31 @@ class SimplePIController:
 
 
 controller = SimplePIController(0.1, 0.002)
-set_speed = 9
+set_speed = 10
 controller.set_desired(set_speed)
+
+
+MAX_SPEED = 25
+MIN_SPEED = 10
+speed_limit = MAX_SPEED
 
 
 @sio.on('telemetry')
 def telemetry(sid, data):
+
     if data:
+
         # The current steering angle of the car
         steering_angle = float(data["steering_angle"])
+
         # The current throttle of the car
         throttle = float(data["throttle"])
+
         # The current speed of the car
         speed = float(data["speed"])
-        # The current image from the center camera of the car
-        imgString = data["image"]
-        image = Image.open(BytesIO(base64.b64decode(imgString)))
+
+        image = Image.open(BytesIO(base64.b64decode(data["image"])))
+
         image_array = np.asarray(image)
         image = image_array[65:-25, :, :]
         image = transformations(image)
@@ -75,13 +84,23 @@ def telemetry(sid, data):
         image = image.view(1, 3, 70, 320)
         image = Variable(image)
         # print(image.shape)
+
         steering_angle = model(image).view(-1).data.numpy()[0]
 
-        throttle = controller.update(float(speed))
+        # onringinally: throttle = controller.update(float(speed))
+
+        # ---------------------------- By Siraj ---------------------------- #
+        global speed_limit
+        if speed > speed_limit:
+            speed_limit = MIN_SPEED
+        else:
+            speed_limit = MAX_SPEED
+
+        throttle = 1.0 - steering_angle ** 2 - (speed / speed_limit) ** 2
+        # ---------------------------- By Siraj ---------------------------- #
 
         send_control(steering_angle, throttle)
-        print("Steering angle: {} | Throttle: {}".format(
-            steering_angle, throttle))
+        print("Steering angle: {} | Throttle: {}".format(steering_angle, throttle))
 
         # save frame
         if args.image_folder != '':
@@ -110,6 +129,7 @@ def send_control(steering_angle, throttle):
 
 
 if __name__ == '__main__':
+    """Testing phase."""
     parser = argparse.ArgumentParser(description='Remote Driving')
     parser.add_argument(
         'model',
@@ -125,7 +145,7 @@ if __name__ == '__main__':
     )
     args = parser.parse_args()
 
-    # check that model Keras version is same as local Keras version
+    # check that model version is same as local PyTorch version
     checkpoint = torch.load(
         args.model, map_location=lambda storage, loc: storage)
     model = checkpoint['model']
