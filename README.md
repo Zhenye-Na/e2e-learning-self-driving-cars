@@ -113,11 +113,19 @@ if you prefer to use Colab as training platform, feel free to use [`train_in_col
 3. Click **`Allow`** to accept incoming network connections for python scripts.
 
 
-### Demo videos
+```
+usage: drive.py [-h] model [image_folder]
 
+Remote Driving
 
-| [![Watch the video](./img/bilibili1.jpg)](https://www.bilibili.com/video/av47638211/) | [![Watch the video](./img/bilibili1.jpg)](https://www.bilibili.com/video/av47638211/) |
-|:--------------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------:|
+positional arguments:
+  model         Path to model h5 file. Model should be on the same path.
+  image_folder  Path to image folder. This is where the images from the run
+                will be saved.
+
+optional arguments:
+  -h, --help    show this help message and exit
+```
 
 
 ## Project guide
@@ -187,6 +195,21 @@ pass
 
 pass
 
+```
+NVIDIA model used
+    Image normalization to avoid saturation and make gradients work better.
+    Convolution: 5x5, filter: 24, strides: 2x2, activation: ELU
+    Convolution: 5x5, filter: 36, strides: 2x2, activation: ELU
+    Convolution: 5x5, filter: 48, strides: 2x2, activation: ELU
+    Convolution: 3x3, filter: 64, strides: 1x1, activation: ELU
+    Convolution: 3x3, filter: 64, strides: 1x1, activation: ELU
+    Drop out (0.5)
+    Fully connected: neurons: 100, activation: ELU
+    Fully connected: neurons: 50, activation: ELU
+    Fully connected: neurons: 10, activation: ELU
+    Fully connected: neurons: 1 (output)
+```
+
 
 
 ### 5. Test model performance
@@ -250,6 +273,25 @@ Output:
 0.4.1
 True
 ```
+
+
+## Result
+
+<!--| [![Watch the video](./img/bilibili1.jpg)](https://www.bilibili.com/video/av47638211/) | [![Watch the video](./img/bilibili1.jpg)](https://www.bilibili.com/video/av47638211/) |
+|:--------------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------:|-->
+
+
+## Result
+
+<p align="center">
+    <a href="https://www.bilibili.com/video/av47638211/">
+    <img border="0" alt="Watch the video" src="./img/bilibili1.jpg" width="45%">
+    
+    <a href="https://www.bilibili.com/video/av47638211/">
+    <img border="0" alt="Watch the video" src="./img/bilibili1.jpg" width="45%">
+</p>
+
+
 
 
 ## References
