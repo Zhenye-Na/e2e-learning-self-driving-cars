@@ -36,11 +36,11 @@ Self-driving vehicles is the most hottest and interesting topics of research and
 We will use Python as the primary programming language and [PyTorch](https://pytorch.org/) as the Deep Learning framework. Other resources / software / library could be found as follows.
 
 
-[1] Self-driving car simulator developed by [Udacity](https://www.udacity.com/course/self-driving-car-engineer-nanodegree--nd013) with Unity. Download [here](https://github.com/udacity/self-driving-car-sim)  
-[2] Install [PyTorch environment](https://pytorch.org/get-started/locally/) in your local machine.  
-[3] Register account in [Google Colab](https://colab.research.google.com/) (if you do not have GPU and would love to utilize the power of GPU, please try this and be sure to enable `GPU` as accelerator)  
-[4] Nvidia research paper: [End to End Learning for Self-Driving Cars](https://arxiv.org/pdf/1604.07316v1.pdf)  
-[5] Training data for [track 1]() and [track 2]() (Optional).  
+1. Self-driving car simulator developed by [Udacity](https://www.udacity.com/course/self-driving-car-engineer-nanodegree--nd013) with Unity. Download [here](https://github.com/udacity/self-driving-car-sim)
+2. Install [PyTorch environment](https://pytorch.org/get-started/locally/) in your local machine.
+3. Register account in [Google Colab](https://colab.research.google.com/) (if you do not have GPU and would love to utilize the power of GPU, please try this and be sure to enable `GPU` as accelerator)
+4. Nvidia research paper: [End to End Learning for Self-Driving Cars](https://arxiv.org/pdf/1604.07316v1.pdf)
+5. (Optional) Training data for [track 1]() and [track 2]().  
 
 
 ## Usage
@@ -49,12 +49,12 @@ We will use Python as the primary programming language and [PyTorch](https://pyt
 
 
     ```sh
-    git clone 
+    git clone https://github.com/Zhenye-Na/self-driving-vehicles-sim-with-ml.git
     
-    cd 
+    cd self-driving-vehicles-sim-with-ml/src
     ```
 
-2. Type the following snippet in your terminal and open the "Self-driving car simulator"
+2. Type the following snippet in your terminal and open the Self-driving car simulator beforehand.
 
     ```sh
     python3 drive.py model.h5 
@@ -99,8 +99,8 @@ Click **`RECORD`** again and move your car smoothly and carefully.
 After you have complete recording your move, the training data will be stored in the folder you selected. Here I suggest you record at least 3 laps of the race. The first lap of race, please try best to stay at the center of the road, the rest could be either on the left hand side and right hand side of the road separately.
 
 
-- `/IMG/` - contains training images from three directions of the car - center image, left image and right image.
-- `driving_log.csv` - save the image name information and corresponding information like steer angle, current speed at that time.
+- `/IMG/` - recorded images from cneter, left and right cameras.
+- `driving_log.csv` - saved the image information and associated information like steer angle, current speed, throttle and brake.
 
 
 ### 2. Project code structure
@@ -118,7 +118,9 @@ pass
 
 pass
 
-
+<p align="center">
+  <img src="./img/training-config.png" width="80%">
+</p><br>
 
 ### 4. Model architecture
 
