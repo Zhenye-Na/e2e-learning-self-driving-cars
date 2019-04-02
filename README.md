@@ -45,7 +45,7 @@ We will use Python as the primary programming language and [PyTorch](https://pyt
 
 ## Usage
 
-1. Download this repo.
+Download this repo.
 
 
     ```sh
@@ -54,6 +54,56 @@ We will use Python as the primary programming language and [PyTorch](https://pyt
     cd self-driving-vehicles-sim-with-ml/src
     ```
 
+
+### Training
+
+#### Local machine
+
+
+```
+usage: main.py [-h] [--dataroot DATAROOT] [--ckptroot CKPTROOT] [--lr LR]
+               [--weight_decay WEIGHT_DECAY] [--batch_size BATCH_SIZE]
+               [--num_workers NUM_WORKERS] [--test_size TEST_SIZE]
+               [--shuffle SHUFFLE] [--epochs EPOCHS]
+               [--start_epoch START_EPOCH] [--resume RESUME]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --dataroot DATAROOT   path to dataset
+  --ckptroot CKPTROOT   path to checkpoint
+  --lr LR               learning rate
+  --weight_decay WEIGHT_DECAY
+                        weight decay (L2 penalty)
+  --batch_size BATCH_SIZE
+                        training batch size
+  --num_workers NUM_WORKERS
+                        number of workers in dataloader
+  --test_size TEST_SIZE
+                        train validation set split ratio
+  --shuffle SHUFFLE     whether shuffle data during training
+  --epochs EPOCHS       number of epochs to train
+  --start_epoch START_EPOCH
+                        pre-trained epochs
+  --resume RESUME       whether re-training from ckpt
+```
+
+An example of training usage is shown as follows:
+
+```
+python3 main.py --epochs=50 --resume=True
+```
+
+
+#### Google Colab
+
+if you prefer to use Colab as training platform, feel free to use [`train_in_colab.ipynb`](./src/train_in_colab.ipynb) script to train.
+
+
+
+### Evaluation
+
+1. (Optional) Download [`model.h5`]() first.
+
 2. Type the following snippet in your terminal and open the Self-driving car simulator beforehand.
 
     ```sh
@@ -61,7 +111,6 @@ We will use Python as the primary programming language and [PyTorch](https://pyt
     ```
 
 3. Click **`Allow`** to accept incoming network connections for python scripts.
-
 
 
 ### Demo videos
@@ -106,8 +155,16 @@ After you have complete recording your move, the training data will be stored in
 ### 2. Project code structure
 
 
-
-pass
+```
+.
+├── RcCarDataset.py         # Customed Dataset for Self-driving car simulator
+├── drive.py                # Test script
+├── main.py                 # Main pipeline
+├── model.py                # CNN model declaration
+├── train_in_colab.ipynb    # Colab training script
+├── trainer.py              # Trainer
+└── utils.py                # Helper functions
+```
 
 
 ### 3. Training neural network
