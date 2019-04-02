@@ -1,23 +1,26 @@
 """Trainer."""
 
+import os
 import torch
 
 from utils import toDevice
 
 
 class Trainer(object):
+    """Trainer."""
 
     def __init__(self,
+                 ckptroot,
                  model,
                  device,
                  epochs,
                  criterion,
                  optimizer,
+                 scheduler,
                  start_epoch,
-                 learning_rate,
                  trainloader,
                  validationloader):
-        """Trainer with generator Builder.
+        """Self-Driving car Trainer.
 
         Args:
             model:
@@ -26,7 +29,6 @@ class Trainer(object):
             criterion:
             optimizer:
             start_epoch:
-            learning_rate:
             trainloader:
             validationloader:
 
@@ -36,18 +38,19 @@ class Trainer(object):
         self.model = model
         self.device = device
         self.epochs = epochs
+        self.ckptroot = ckptroot
         self.criterion = criterion
         self.optimizer = optimizer
+        self.scheduler = scheduler
         self.start_epoch = start_epoch
-        self.learning_rate = learning_rate
         self.trainloader = trainloader
         self.validationloader = validationloader
 
     def train(self):
         """Training process."""
-
-        for epoch in range(self.epochs):
-            self.model.to(self.device)
+        self.model.to(self.device)
+        for epoch in range(self.start_epoch, self.epochs + self.start_epoch):
+            self.scheduler.step()
 
             # Training
             train_loss = 0.0
@@ -96,3 +99,21 @@ class Trainer(object):
 
                     if local_batch % 100 == 0:
                         print("Validation Loss: {}\n".format(valid_loss / (local_batch + 1)))
+
+            # Save model
+            if epoch % 5 == 0 or epoch == self.epochs + self.start_epoch - 1:
+
+                state = {
+                    'epoch': epoch + 1,
+                    'state_dict': self.model.state_dict(),
+                    'optimizer': self.optimizer.state_dict(),
+                }
+
+                self.save_checkpoint(state)
+
+    def save_checkpoint(self, state):
+        """Save checkpoint."""
+        if not os.path.exists(self.ckptroot):
+            os.makedirs(self.ckptroot)
+
+        torch.save(state, self.ckptroot + 'model-{}.h5'.format(state['epoch']))

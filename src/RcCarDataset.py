@@ -4,6 +4,7 @@ from torch.utils import data
 
 # import cv2
 import numpy as np
+
 # use skimage if you do not have cv2 installed
 from skimage import io
 
@@ -19,6 +20,7 @@ def augment(dataroot, imgName, angle):
         # current_image = cv2.flip(current_image, 1)
         current_image = np.flipud(current_image)
         angle = angle * -1.0
+
     return current_image, angle
 
 

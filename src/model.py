@@ -15,7 +15,6 @@ class NetworkNvidia(nn.Module):
     def __init__(self):
         """Initialize NVIDIA model.
 
-
         NVIDIA model used
             Image normalization to avoid saturation and make gradients work better.
             Convolution: 5x5, filter: 24, strides: 2x2, activation: ELU
@@ -65,10 +64,10 @@ class NetworkNvidia(nn.Module):
 
 
 class NetworkLight(nn.Module):
-    """Network Light."""
+    """Custom model."""
 
     def __init__(self):
-        """Initialize Light Network."""
+        """Initialize CNN Network."""
         super(NetworkLight, self).__init__()
         self.conv_layers = nn.Sequential(
             nn.Conv2d(3, 24, 3, stride=2),

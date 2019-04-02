@@ -3,7 +3,7 @@
 import os
 import pandas as pd
 
-
+import torch
 from torch.utils import data
 from RcCarDataset import TripletDataset
 

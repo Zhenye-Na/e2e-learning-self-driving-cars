@@ -55,7 +55,7 @@ set_speed = 10
 controller.set_desired(set_speed)
 
 
-MAX_SPEED = 25
+MAX_SPEED = 20
 MIN_SPEED = 10
 speed_limit = MAX_SPEED
 
@@ -145,10 +145,11 @@ if __name__ == '__main__':
     )
     args = parser.parse_args()
 
+    model = NetworkNvidia()
     # check that model version is same as local PyTorch version
     checkpoint = torch.load(
         args.model, map_location=lambda storage, loc: storage)
-    model = checkpoint['model']
+    model.load_state_dict(checkpoint['state_dict'])
 
     if args.image_folder != '':
         print("Creating image folder at {}".format(args.image_folder))

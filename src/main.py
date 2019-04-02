@@ -6,8 +6,9 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 
+from torch.optim.lr_scheduler import StepLR
 
-from model import NetworkLight
+from model import NetworkLight, NetworkNvidia
 from trainer import Trainer
 from utils import load_data, data_loader
 
@@ -30,7 +31,7 @@ def parse_args():
     # parser.add_argument('--p',            type=float, default=0.25,       help='probability of an element to be zeroed')
 
     # training settings
-    parser.add_argument('--epochs',       type=int,   default=40,         help='number of epochs to train')
+    parser.add_argument('--epochs',       type=int,   default=10,         help='number of epochs to train')
     parser.add_argument('--start_epoch',  type=int,   default=0,          help='pre-trained epochs')
     parser.add_argument('--resume',       type=bool,  default=False,      help='whether re-training from ckpt')
 
@@ -83,6 +84,7 @@ def main():
 
     # ------------------ Oringinally ------------------
 
+    print("==> Preparing dataset ...")
     trainloader, validationloader = data_loader(args.dataroot,
                                                 trainset, valset,
                                                 args.batch_size,
@@ -90,33 +92,40 @@ def main():
                                                 args.num_workers)
 
     # Define model
-    model = NetworkLight()
+    print("==> Initialize model ...")
+    model = NetworkNvidia()
 
     # Define optimizer and criterion
     optimizer = optim.Adam(model.parameters(),
                            lr=args.lr,
                            weight_decay=args.weight_decay)
-
     criterion = nn.MSELoss()
 
+    if args.resume:
+        print("==> Loading checkpoint ...")
+        checkpoint = torch.load("model-10.h5",
+                                map_location=lambda storage, loc: storage)
+        args.start_epoch = checkpoint['epoch']
+        model.load_state_dict(checkpoint['state_dict'])
+        optimizer.load_state_dict(checkpoint['optimizer'])
+
+    # learning rate scheduler
+    scheduler = StepLR(optimizer, step_size=20, gamma=0.1)
+
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    trainer = Trainer(model,
+
+    print("==> Start training ...")
+    trainer = Trainer(args.ckptroot,
+                      model,
                       device,
                       args.epochs,
                       criterion,
                       optimizer,
+                      scheduler,
                       args.start_epoch,
-                      args.lr,
                       trainloader,
                       validationloader)
     trainer.train()
-
-    # Define state and save the model wrt to state
-    state = {
-        'model': model.module if device == 'cuda' else model,
-    }
-
-    torch.save(state, args.ckptroot + 'model.h5')
 
 
 if __name__ == '__main__':
