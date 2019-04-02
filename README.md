@@ -285,10 +285,10 @@ True
 
 <p align="center">
     <a href="https://www.bilibili.com/video/av47638211/">
-    <img border="0" alt="Watch the video" src="./img/bilibili1.jpg" width="45%">
+    <img border="0" alt="Watch the video" src="./img/bilibili1.jpg" width="45%"></a>
     
     <a href="https://www.bilibili.com/video/av47638211/">
-    <img border="0" alt="Watch the video" src="./img/bilibili1.jpg" width="45%">
+    <img border="0" alt="Watch the video" src="./img/bilibili1.jpg" width="45%"></a>
 </p>
 
 
