@@ -22,9 +22,9 @@
     - [1. Prepare training data](#1-prepare-training-data)
     - [2. Project code structure](#2-project-code-structure)
     - [3. Training neural network](#3-training-neural-network)
-    - [4. Model architecture and hyper-parameters](#4-model-architecture)
+    - [4. Model architecture and hyper-parameters](#4-model-architecture-and-hyper-parameters)
         - [Model architecture](#model-architecture)
-        - [Hyper-parameters]()
+        - [Hyper-parameters](#hyper-parameters)
 - [FAQ](#faq)
 - [References](#references)
 
@@ -44,12 +44,11 @@ We will use Python as the primary programming language and [PyTorch](https://pyt
 1. Self-driving car simulator developed by [Udacity](https://www.udacity.com/course/self-driving-car-engineer-nanodegree--nd013) with Unity. Download [here](https://github.com/udacity/self-driving-car-sim)
 2. Install [PyTorch environment](https://pytorch.org/get-started/locally/) in your local machine.
 3. Register account in [Google Colab](https://colab.research.google.com/) (if you do not have GPU and would love to utilize the power of GPU, please try this and be sure to enable `GPU` as accelerator)
-4. Nvidia research paper: [End to End Learning for Self-Driving Cars](https://arxiv.org/pdf/1604.07316v1.pdf)
 
 
 ## Dataset
 
-I have already uploaded training data (including track 1 and track 2 individually). Feel free to download it [here]().
+I have already hosted training data (including track 1 and track 2 individually) in Floydhub. Feel free to download it [here](https://www.floydhub.com/zhenye/datasets/self-driving-sim).
 
 
 
@@ -112,9 +111,7 @@ if you prefer to use Colab as training platform, feel free to use [`train_in_col
 
 ### Evaluation
 
-After training process, use the saved model and `drive.py` file to test your model performance in the simulator. Remeber to select **`AUTONOMOUS MODE`**.
-
-Download [`model.h5`]() or use your own pre-trained model and click **`Allow`** to accept incoming network connections for python scripts.
+After training process, use the saved model and `drive.py` file to test your model performance in the simulator. Remeber to select **`AUTONOMOUS MODE`**. Click **`Allow`** to accept incoming network connections for python scripts.
 
 
 ```
