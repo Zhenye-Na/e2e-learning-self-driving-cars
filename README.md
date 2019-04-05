@@ -72,9 +72,11 @@ cd self-driving-vehicles-sim-with-ml/src
 ```
 usage: main.py [-h] [--dataroot DATAROOT] [--ckptroot CKPTROOT] [--lr LR]
                [--weight_decay WEIGHT_DECAY] [--batch_size BATCH_SIZE]
-               [--num_workers NUM_WORKERS] [--test_size TEST_SIZE]
+               [--num_workers NUM_WORKERS] [--train_size TRAIN_SIZE]
                [--shuffle SHUFFLE] [--epochs EPOCHS]
                [--start_epoch START_EPOCH] [--resume RESUME]
+
+Main pipeline for self-driving vehicles simulation using machine learning.
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -87,7 +89,7 @@ optional arguments:
                         training batch size
   --num_workers NUM_WORKERS
                         number of workers in dataloader
-  --test_size TEST_SIZE
+  --train_size TRAIN_SIZE
                         train validation set split ratio
   --shuffle SHUFFLE     whether shuffle data during training
   --epochs EPOCHS       number of epochs to train
@@ -132,8 +134,34 @@ optional arguments:
 An example of test usage is shown as follows:
 
 ```
-python drive.py --model model.h5
+python3 drive.py model.h5 runs1/
 ```
+
+
+### Create videos
+
+
+```
+usage: video.py [-h] [--fps FPS] image_folder
+
+Create driving video.
+
+positional arguments:
+  image_folder  Path to image folder. The video will be created from these
+                images.
+
+optional arguments:
+  -h, --help    show this help message and exit
+  --fps FPS     FPS (Frames per second) setting for the video.
+```
+
+
+An example of test usage is shown as follows:
+
+```
+python3 video.py runs1/ --fps 48
+```
+
 
 
 ## Project guide
@@ -179,7 +207,8 @@ After you have completed recording your move, the training data will be stored i
 ├── model.py                # CNN model declaration
 ├── train_in_colab.ipynb    # Colab training script
 ├── trainer.py              # Trainer
-└── utils.py                # Helper functions
+├── utils.py                # Helper functions
+└── video.py                # create videos
 ```
 
 
@@ -189,11 +218,11 @@ After you have completed recording your move, the training data will be stored i
   <img src="./img/training.png" width="80%">
 </p><br>
 
-pass
 
 <p align="center">
   <img src="./img/training-config.png" width="80%">
 </p><br>
+
 
 ### 4. Model architecture and hyper-parameters
 
@@ -224,7 +253,15 @@ NVIDIA model used
 
 #### Hyper-parameters
 
-pass
+|  Hyper-parameters |              Description             |
+|:-----------------:|:------------------------------------:|
+|      lr=1e-4      |             learning rate            |
+| weight_decay=1e-5 |       weight decay (L2 penalty)      |
+|   batch_size=32   |          training batch size         |
+|   num_workers=8   |   \# of workers used in dataloader   |
+|   train_size=0.8  |   train-validation set split ratio   |
+|    shuffle=True   | whether shuffle data during training |
+
 
 
 
@@ -283,10 +320,19 @@ True
 
 ## Result
 
-| [![Watch the video](./img/bilibili1.jpg)](https://www.bilibili.com/video/av47638211/) | [![Watch the video](./img/bilibili1.jpg)](https://www.bilibili.com/video/av47638211/) |
-|:--------------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------:|
+
+### Training loss vs Validation loss
+
+| ![](./img/loss1.png) | ![](./img/loss1.png) |
+|----------------------|----------------------|
 
 
+### Demo videos
+
+
+|                                                         Track 1                                                         |                                                         Track 2                                                         |
+|:-----------------------------------------------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------------------------------:|
+| [![Watch the video](https://img.youtube.com/vi/xIm6FR_8fm8/hqdefault.jpg)](https://www.youtube.com/watch?v=xIm6FR_8fm8) | [![Watch the video](https://img.youtube.com/vi/vp2ECcXOcWg/hqdefault.jpg)](https://www.youtube.com/watch?v=vp2ECcXOcWg) |
 
 
 
