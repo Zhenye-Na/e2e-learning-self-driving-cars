@@ -327,7 +327,7 @@ True
 
 ### Training loss vs Validation loss
 
-| ![](./img/loss1.png) | ![](./img/loss1.png) |
+| ![](./img/loss1.png) | ![](./img/loss2.png) |
 |----------------------|----------------------|
 
 
