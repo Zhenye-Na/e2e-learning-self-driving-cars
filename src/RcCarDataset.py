@@ -11,7 +11,7 @@ from skimage import io
 
 def augment(dataroot, imgName, angle):
     """Data augmentation."""
-    name = dataroot + 'IMG/' + imgName.split('/')[-1]
+    name = dataroot + 'IMG/' + imgName.split('\\')[-1]
     # current_image = cv2.imread(name)
     current_image = io.imread(name)
 
@@ -32,16 +32,16 @@ class TripletDataset(data.Dataset):
         self.transform = transform
 
     def __getitem__(self, index):
-        batch_samples = self.samples[index]
+        batch_samples  = self.samples[index]
         steering_angle = float(batch_samples[3])
 
         center_img, steering_angle_center = augment(self.dataroot, batch_samples[0], steering_angle)
-        left_img, steering_angle_left = augment(self.dataroot, batch_samples[1], steering_angle + 0.4)
-        right_img, steering_angle_right = augment(self.dataroot, batch_samples[2], steering_angle - 0.4)
+        left_img, steering_angle_left     = augment(self.dataroot, batch_samples[1], steering_angle + 0.4)
+        right_img, steering_angle_right   = augment(self.dataroot, batch_samples[2], steering_angle - 0.4)
 
         center_img = self.transform(center_img)
-        left_img = self.transform(left_img)
-        right_img = self.transform(right_img)
+        left_img   = self.transform(left_img)
+        right_img  = self.transform(right_img)
 
         return (center_img, steering_angle_center), (left_img, steering_angle_left), (right_img, steering_angle_right)
 

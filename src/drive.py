@@ -55,9 +55,9 @@ set_speed = 10
 controller.set_desired(set_speed)
 
 
-MAX_SPEED = 20
-MIN_SPEED = 10
-speed_limit = MAX_SPEED
+# MAX_SPEED = 15
+# MIN_SPEED = 10
+# speed_limit = MAX_SPEED
 
 
 @sio.on('telemetry')
@@ -76,27 +76,30 @@ def telemetry(sid, data):
 
         image = Image.open(BytesIO(base64.b64decode(data["image"])))
 
-        image_array = np.asarray(image)
-        image = image_array[65:-25, :, :]
-        image = transformations(image)
-        image = torch.Tensor(image)
+        image_array = np.array(image.copy())
+        image_array = image_array[65:-25, :, :]
+        # transform RGB to BGR for cv2
+        image_array = image_array[:, :, ::-1]#.copy()
+        image_array = transformations(image_array)
+        image_tensor = torch.Tensor(image_array)
         # print(image.shape)
-        image = image.view(1, 3, 70, 320)
-        image = Variable(image)
+        image_tensor = image_tensor.view(1, 3, 70, 320)
+        image_tensor = Variable(image_tensor)
         # print(image.shape)
 
-        steering_angle = model(image).view(-1).data.numpy()[0]
+        steering_angle = model(image_tensor).view(-1).data.numpy()[0]
 
-        # onringinally: throttle = controller.update(float(speed))
+        # onringinally
+        # throttle = controller.update(float(speed))
 
         # ---------------------------- By Siraj ---------------------------- #
-        global speed_limit
-        if speed > speed_limit:
-            speed_limit = MIN_SPEED
-        else:
-            speed_limit = MAX_SPEED
+        # global speed_limit
+        # if speed > speed_limit:
+        #     speed_limit = MIN_SPEED
+        # else:
+        #     speed_limit = MAX_SPEED
 
-        throttle = 1.0 - steering_angle ** 2 - (speed / speed_limit) ** 2
+        throttle = 1.2 - steering_angle ** 2 - (speed / set_speed) ** 2
         # ---------------------------- By Siraj ---------------------------- #
 
         send_control(steering_angle, throttle)
@@ -145,11 +148,24 @@ if __name__ == '__main__':
     )
     args = parser.parse_args()
 
+    # define model
+    # model = NetworkLight()
     model = NetworkNvidia()
+
     # check that model version is same as local PyTorch version
-    checkpoint = torch.load(
-        args.model, map_location=lambda storage, loc: storage)
-    model.load_state_dict(checkpoint['state_dict'])
+    try:
+        checkpoint = torch.load(
+            args.model, map_location=lambda storage, loc: storage)
+        model.load_state_dict(checkpoint['state_dict'])
+
+    except KeyError:
+        checkpoint = torch.load(args.model, map_location=lambda storage, loc: storage)
+        model = checkpoint['model']
+
+    except RuntimeError:
+        print("==> Please check using the same model as the checkpoint")
+        import sys
+        sys.exit()
 
     if args.image_folder != '':
         print("Creating image folder at {}".format(args.image_folder))

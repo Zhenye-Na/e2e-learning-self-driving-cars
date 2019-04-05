@@ -7,7 +7,7 @@ from utils import toDevice
 
 
 class Trainer(object):
-    """Trainer."""
+    """Trainer class."""
 
     def __init__(self,
                  ckptroot,
@@ -23,14 +23,14 @@ class Trainer(object):
         """Self-Driving car Trainer.
 
         Args:
-            model:
-            device:
-            epochs:
-            criterion:
-            optimizer:
-            start_epoch:
-            trainloader:
-            validationloader:
+            model: CNN model
+            device: cuda or cpu
+            epochs: epochs to training neural network
+            criterion: nn.MSELoss()
+            optimizer: optim.Adam()
+            start_epoch: 0 or checkpoint['epoch']
+            trainloader: training set loader
+            validationloader: validation set loader
 
         """
         super(Trainer, self).__init__()
@@ -98,15 +98,20 @@ class Trainer(object):
                         valid_loss += loss.data.item()
 
                     if local_batch % 100 == 0:
-                        print("Validation Loss: {}\n".format(valid_loss / (local_batch + 1)))
+                        print("Validation Loss: {}".format(valid_loss / (local_batch + 1)))
+
+            print()
 
             # Save model
             if epoch % 5 == 0 or epoch == self.epochs + self.start_epoch - 1:
+
+                print("==> Save checkpoint ...")
 
                 state = {
                     'epoch': epoch + 1,
                     'state_dict': self.model.state_dict(),
                     'optimizer': self.optimizer.state_dict(),
+                    'scheduler': self.scheduler.state_dict(),
                 }
 
                 self.save_checkpoint(state)

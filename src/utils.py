@@ -17,7 +17,7 @@ def toDevice(datas, device):
     return imgs.float().to(device), angles.float().to(device)
 
 
-def load_data(data_dir, test_size):
+def load_data(data_dir, train_size):
     """Load training data and train validation split"""
     pass
 
@@ -26,7 +26,7 @@ def load_data(data_dir, test_size):
                           names=['center', 'left', 'right', 'steering', 'throttle', 'reverse', 'speed'])
 
     # Divide the data into training set and validation set
-    train_len = int(test_size * data_df.shape[0])
+    train_len = int(train_size * data_df.shape[0])
     valid_len = data_df.shape[0] - train_len
     trainset, valset = data.random_split(
         data_df.values.tolist(), lengths=[train_len, valid_len])

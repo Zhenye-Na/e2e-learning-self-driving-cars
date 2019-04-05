@@ -6,32 +6,31 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 
-from torch.optim.lr_scheduler import StepLR
+from torch.optim.lr_scheduler import MultiStepLR
 
-from model import NetworkLight, NetworkNvidia
+from model import NetworkNvidia, NetworkLight
 from trainer import Trainer
 from utils import load_data, data_loader
 
 
 def parse_args():
     """Parse parameters."""
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(description='Main pipeline for self-driving vehicles simulation using machine learning.')
 
     # directory
-    parser.add_argument('--dataroot',     type=str,   default="../data/", help='path to dataset')
+    parser.add_argument('--dataroot',     type=str,   default="../../track2data/", help='path to dataset')
     parser.add_argument('--ckptroot',     type=str,   default="./",       help='path to checkpoint')
 
     # hyperparameters settings
-    parser.add_argument('--lr',           type=float, default=0.0001,     help='learning rate')
+    parser.add_argument('--lr',           type=float, default=1e-4,       help='learning rate')
     parser.add_argument('--weight_decay', type=float, default=1e-5,       help='weight decay (L2 penalty)')
     parser.add_argument('--batch_size',   type=int,   default=32,         help='training batch size')
-    parser.add_argument('--num_workers',  type=int,   default=8,          help='number of workers in dataloader')
-    parser.add_argument('--test_size',    type=float, default=0.8,        help='train validation set split ratio')
+    parser.add_argument('--num_workers',  type=int,   default=8,          help='# of workers used in dataloader')
+    parser.add_argument('--train_size',   type=float, default=0.8,        help='train validation set split ratio')
     parser.add_argument('--shuffle',      type=bool,  default=True,       help='whether shuffle data during training')
-    # parser.add_argument('--p',            type=float, default=0.25,       help='probability of an element to be zeroed')
 
     # training settings
-    parser.add_argument('--epochs',       type=int,   default=10,         help='number of epochs to train')
+    parser.add_argument('--epochs',       type=int,   default=40,         help='number of epochs to train')
     parser.add_argument('--start_epoch',  type=int,   default=0,          help='pre-trained epochs')
     parser.add_argument('--resume',       type=bool,  default=False,      help='whether re-training from ckpt')
 
@@ -43,10 +42,11 @@ def parse_args():
 
 def main():
     """Main pipeline."""
+    # parse command line arguments
     args = parse_args()
 
     # load trainig set and split
-    trainset, valset = load_data(args.dataroot, args.test_size)
+    trainset, valset = load_data(args.dataroot, args.train_size)
 
     # ------------------ Oringinally ------------------
 
@@ -91,29 +91,38 @@ def main():
                                                 args.shuffle,
                                                 args.num_workers)
 
-    # Define model
+    # define model
     print("==> Initialize model ...")
-    model = NetworkNvidia()
+    # model = NetworkNvidia()
+    model = NetworkLight()
 
-    # Define optimizer and criterion
+    # define optimizer and criterion
     optimizer = optim.Adam(model.parameters(),
                            lr=args.lr,
                            weight_decay=args.weight_decay)
     criterion = nn.MSELoss()
 
+    # learning rate scheduler
+    scheduler = MultiStepLR(optimizer, milestones=[30, 80], gamma=0.1)
+
+    # resume
     if args.resume:
         print("==> Loading checkpoint ...")
+        # use pre-trained model
         checkpoint = torch.load("model-10.h5",
                                 map_location=lambda storage, loc: storage)
+
+        print("==> Loading checkpoint model-10.h5 successfully ...")
         args.start_epoch = checkpoint['epoch']
         model.load_state_dict(checkpoint['state_dict'])
         optimizer.load_state_dict(checkpoint['optimizer'])
+        scheduler.load_state_dict(checkpoint['scheduler'])
 
-    # learning rate scheduler
-    scheduler = StepLR(optimizer, step_size=20, gamma=0.1)
-
+    # cuda or cpu
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    print("==> Use accelerator: ", device)
 
+    # training
     print("==> Start training ...")
     trainer = Trainer(args.ckptroot,
                       model,
