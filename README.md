@@ -18,6 +18,7 @@
         - [Local machine](#local-machine)
         - [Google Colab host](#google-colab-host)
     - [Evaluation](#evaluation)
+    - [Create videos](#create-videos)
 - [Project guide](#project-guide)
     - [1. Prepare training data](#1-prepare-training-data)
     - [2. Project code structure](#2-project-code-structure)
@@ -26,14 +27,16 @@
         - [Model architecture](#model-architecture)
         - [Hyper-parameters](#hyper-parameters)
 - [FAQ](#faq)
+- [Result](#result)
+    - [Training loss vs Validation loss](#training-loss-vs-validation-loss)
+    - [Demo videos](#demo-videos)
 - [References](#references)
 
 
 
 ## Introduction
 
-Self-driving vehicles is the most hottest and interesting topics of research and business nowadays. More and more giant companies have jumped into this area. In this project, I will show you the power of Deep Neural Network in this field.
-
+Self-driving vehicles is the most hottest and interesting topics of research and business nowadays. More and more giant companies have jumped into this area. In this project, I have implemented the CNN model put forward by Nvidia Research in this [paper](https://arxiv.org/pdf/1604.07316v1.pdf) using PyTorch to extract features from 3 cameras in the vehicle simulation software to predict steering angle. This is an end-to-end approach to apply to autonomous driving.
 
 
 ## Prerequisite
@@ -107,13 +110,15 @@ python3 main.py --epochs=50 --resume=True
 
 #### Google Colab host
 
-if you prefer to use Colab as training platform, feel free to use [`train_in_colab.ipynb`](./src/train_in_colab.ipynb) script. Make sure you have already uploaded training data to Google Drive.
+if you prefer to use Colab as training platform, feel free to use [`train.ipynb`](./src/train.ipynb) script. Make sure you have already uploaded training data to Google Drive.
 
 
 
 ### Evaluation
 
-After training process, use the saved model and `drive.py` file to test your model performance in the simulator. Remeber to select **`AUTONOMOUS MODE`**. Click **`Allow`** to accept incoming network connections for python scripts.
+> Training images are loaded in BGR colorspace using `cv2` while `drive.py` load images in RGB to predict the steering angles.
+
+After training process, use the saved model and [`drive.py`](./src/drive.py) file to test your model performance in the simulator. Remeber to select **`AUTONOMOUS MODE`**. Click **`Allow`** to accept incoming network connections for python scripts.
 
 
 ```
@@ -233,7 +238,6 @@ After you have completed recording your move, the training data will be stored i
   <img src="./img/model-achitecture.png" width="80%">
 </p><br>
 
-pass
 
 ```
 NVIDIA model used
