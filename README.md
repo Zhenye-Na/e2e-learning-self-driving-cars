@@ -53,7 +53,10 @@ We will use Python as the primary programming language and [PyTorch](https://pyt
 
 I have already hosted training data (including track 1 and track 2 individually) in Floydhub. Feel free to download it [here](https://www.floydhub.com/zhenye/datasets/self-driving-sim).
 
-
+<div align="center">
+  <img src="./img/pair.png" width="">
+  <p>Image pair from left camera, center camer and righ camera</p>
+</div><br>
 
 ## Usage
 
@@ -99,6 +102,8 @@ optional arguments:
   --start_epoch START_EPOCH
                         pre-trained epochs
   --resume RESUME       whether re-training from ckpt
+  --model_name MODEL_NAME
+                        model architecture to use [nvidia, light]
 ```
 
 An example of training usage is shown as follows:
@@ -175,20 +180,20 @@ python3 video.py runs1/ --fps 48
 
 Once you have installed the self-driving car simulator, you will find there are 2 different tracks in the simulator. The second one is much harder to deal with. Please choose the terrain you like and make sure that you select **`TRAINING MODE`**. 
 
-<p align="center">
+<div align="center">
   <img src="./img/main-menu.png" width="80%">
-</p><br>
+</div><br>
 
 Click **`RECORD`** button on the right corner and select a directory as the folder to save your training image and driving log information.
 
-<p align="center">
+<div align="center">
   <img src="./img/recording.png" width="80%">
-</p><br>
+</div><br>
 
 
-<p align="center">
+<div align="center">
   <img src="./img/select-folder.png" width="80%">
-</p><br>
+</div><br>
 
 
 Click **`RECORD`** again and move your car smoothly and carefully.
@@ -219,14 +224,14 @@ After you have completed recording your move, the training data will be stored i
 
 ### 3. Training neural network
 
-<p align="center">
+<div align="center">
   <img src="./img/training.png" width="80%">
-</p><br>
+</div><br>
 
 
-<p align="center">
+<div align="center">
   <img src="./img/training-config.png" width="80%">
-</p><br>
+</div><br>
 
 
 ### 4. Model architecture and hyper-parameters
@@ -234,24 +239,25 @@ After you have completed recording your move, the training data will be stored i
 
 #### Model architecture
 
-<p align="center">
+<div align="center">
   <img src="./img/model-achitecture.png" width="80%">
-</p><br>
+</div><br>
 
 
 ```
 NVIDIA model used
-    Image normalization to avoid saturation and make gradients work better.
-    Convolution: 5x5, filter: 24, strides: 2x2, activation: ELU
-    Convolution: 5x5, filter: 36, strides: 2x2, activation: ELU
-    Convolution: 5x5, filter: 48, strides: 2x2, activation: ELU
-    Convolution: 3x3, filter: 64, strides: 1x1, activation: ELU
-    Convolution: 3x3, filter: 64, strides: 1x1, activation: ELU
-    Drop out (0.5)
-    Fully connected: neurons: 100, activation: ELU
-    Fully connected: neurons: 50, activation: ELU
-    Fully connected: neurons: 10, activation: ELU
-    Fully connected: neurons: 1 (output)
+
+Image normalization to avoid saturation and make gradients work better.
+Convolution: 5x5, filter: 24, strides: 2x2, activation: ELU
+Convolution: 5x5, filter: 36, strides: 2x2, activation: ELU
+Convolution: 5x5, filter: 48, strides: 2x2, activation: ELU
+Convolution: 3x3, filter: 64, strides: 1x1, activation: ELU
+Convolution: 3x3, filter: 64, strides: 1x1, activation: ELU
+Drop out (0.5)
+Fully connected: neurons: 100, activation: ELU
+Fully connected: neurons: 50, activation: ELU
+Fully connected: neurons: 10, activation: ELU
+Fully connected: neurons: 1 (output)
 ```
 
 
@@ -265,7 +271,6 @@ NVIDIA model used
 |   num_workers=8   |   \# of workers used in dataloader   |
 |   train_size=0.8  |   train-validation set split ratio   |
 |    shuffle=True   | whether shuffle data during training |
-
 
 
 
