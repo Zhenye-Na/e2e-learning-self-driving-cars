@@ -19,7 +19,7 @@
         - [Google Colab host](#google-colab-host)
     - [Evaluation](#evaluation)
     - [Create videos](#create-videos)
-- [Project guide](#project-guide)
+- [Project Overview](#project-overview)
     - [1. Prepare training data](#1-prepare-training-data)
     - [2. Project code structure](#2-project-code-structure)
     - [3. Training neural network](#3-training-neural-network)
@@ -55,7 +55,7 @@ I have already hosted training data (including track 1 and track 2 individually)
 
 <div align="center">
   <img src="./img/pair.png" width="">
-  <p>Image pair from left camera, center camer and righ camera</p>
+  <p>Image pair from left, center and right</p>
 </div><br>
 
 ## Usage
@@ -174,7 +174,7 @@ python3 video.py runs1/ --fps 48
 
 
 
-## Project guide
+## Project Overview
 
 ### 1. Prepare training data
 
@@ -211,14 +211,14 @@ After you have completed recording your move, the training data will be stored i
 
 ```
 .
-├── RcCarDataset.py         # Customed Dataset for Self-driving car simulator
+├── RcCarDataset.py         # Customed Dataset for Self-driving car simulator (Simple CNN as well as Nvidia paper's CNN model)
 ├── drive.py                # Test script
 ├── main.py                 # Main pipeline
 ├── model.py                # CNN model declaration
 ├── train_in_colab.ipynb    # Colab training script
 ├── trainer.py              # Trainer
 ├── utils.py                # Helper functions
-└── video.py                # create videos
+└── video.py                # Create videos
 ```
 
 
@@ -342,6 +342,14 @@ True
 |                                                         Track 1                                                         |                                                         Track 2                                                         |
 |:-----------------------------------------------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------------------------------:|
 | [![Watch the video](https://img.youtube.com/vi/xIm6FR_8fm8/hqdefault.jpg)](https://www.youtube.com/watch?v=xIm6FR_8fm8) | [![Watch the video](https://img.youtube.com/vi/vp2ECcXOcWg/hqdefault.jpg)](https://www.youtube.com/watch?v=vp2ECcXOcWg) |
+
+
+
+## Future work
+
+- [ ] Edge detection processing
+- [ ] Data augmentation
+- [ ] Record evaluation images as training set
 
 
 
