@@ -51,12 +51,16 @@ We will use Python as the primary programming language and [PyTorch](https://pyt
 
 ## Dataset
 
-I have already hosted training data (including track 1 and track 2 individually) in Floydhub. Feel free to download it [here](https://www.floydhub.com/zhenye/datasets/self-driving-sim).
+I have already hosted training data (including track 1 and track 2 individually) in Kaggle dataset and Floydhub. Feel free to download:
+
+- [Kaggle]()
+- [Floydhub](https://www.floydhub.com/zhenye/datasets/self-driving-sim)
 
 <div align="center">
   <img src="./img/pair.png" width="">
   <p>Image pair from left, center and right</p>
 </div><br>
+
 
 ## Usage
 
@@ -146,6 +150,13 @@ An example of test usage is shown as follows:
 ```
 python3 drive.py model.h5 runs1/
 ```
+
+#### Tracks
+
+|        Terrain 1        |        Terrain 2        |        Terrain 3        |
+|:-----------------------:|:-----------------------:|:-----------------------:|
+| ![](./img/terrain1.png) | ![](./img/terrain2.png) | ![](./img/terrain3.png) |
+
 
 
 ### Create videos
@@ -332,8 +343,16 @@ True
 
 ### Training loss vs Validation loss
 
-| ![](./img/loss1.png) | ![](./img/loss2.png) |
-|----------------------|----------------------|
+<div align="center">
+  <img src="./img/loss3.png" width="70%">
+  <p>Training loss vs Validation loss</p>
+</div>
+
+
+|             ![](./img/loss1.png)            |             ![](./img/loss2.png)            |
+|:-------------------------------------------:|:-------------------------------------------:|
+| Training loss vs Validation loss in track 1 | Training loss vs Validation loss in track 1 |
+
 
 
 ### Demo videos
@@ -347,9 +366,9 @@ True
 
 ## Future work
 
-- [ ] Edge detection processing
-- [ ] Data augmentation
-- [ ] Record evaluation images as training set
+- [ ] Edge detection pre-processing
+- [ ] Data augmentation (more)
+- [ ] Add "autonomous mode" captured image into training set
 
 
 
