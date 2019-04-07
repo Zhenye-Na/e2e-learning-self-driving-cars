@@ -1,4 +1,9 @@
-"""PLot training and validation loss."""
+"""
+Plot training and validation loss.
+
+@author: Zhenye Na - https://github.com/Zhenye-Na
+@reference: "End to End Learning for Self-Driving Cars", arXiv:1604.07316
+"""
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -10,7 +15,7 @@ sns.set_style("whitegrid")
 training_loss = []
 validation_loss = []
 
-with open("combined-loss.txt") as f:
+with open("loss1.txt") as f:
     for line in f.readlines():
         if "Training" in line:
             training_loss.append(float(line.rstrip().split(": ")[-1]))

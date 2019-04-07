@@ -1,4 +1,9 @@
-"""Main pipeline of Self-driving car training."""
+"""
+Main pipeline of Self-driving car training.
+
+@author: Zhenye Na - https://github.com/Zhenye-Na
+@reference: "End to End Learning for Self-Driving Cars", arXiv:1604.07316
+"""
 
 import argparse
 
@@ -8,7 +13,7 @@ import torch.optim as optim
 
 from torch.optim.lr_scheduler import MultiStepLR
 
-from model import NetworkNvidia, NetworkLight, NetworkLSTM
+from model import NetworkNvidia, NetworkLight
 from trainer import Trainer
 from utils import load_data, data_loader
 

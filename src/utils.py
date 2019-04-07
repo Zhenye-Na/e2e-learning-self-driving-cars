@@ -1,9 +1,13 @@
-"""Util functions."""
+"""
+Helper functions.
+
+@author: Zhenye Na - https://github.com/Zhenye-Na
+@reference: "End to End Learning for Self-Driving Cars", arXiv:1604.07316
+"""
 
 import os
 import pandas as pd
 
-import torch
 from torch.utils import data
 from RcCarDataset import TripletDataset
 
@@ -12,13 +16,32 @@ from torch.utils.data import DataLoader
 
 
 def toDevice(datas, device):
-    """Enable cuda."""
+    """
+    Enable cuda.
+
+    Args:
+        datas: tensor
+        device: cpu or cuda
+
+    Returns:
+        Transform `data` to `device`
+    """
     imgs, angles = datas
     return imgs.float().to(device), angles.float().to(device)
 
 
 def load_data(data_dir, train_size):
-    """Load training data and train-validation split."""
+    """
+    Load training data and train-validation split.
+
+    Args:
+        data_dir: data root
+        train_size: ratio to split to training set and validation set.
+
+    Returns:
+        trainset: training set
+        valset: validation set
+    """
     # reads CSV file into a single dataframe variable
     data_df = pd.read_csv(os.path.join(data_dir, 'driving_log.csv'),
                           names=['center', 'left', 'right', 'steering',
@@ -28,7 +51,9 @@ def load_data(data_dir, train_size):
     train_len = int(train_size * data_df.shape[0])
     valid_len = data_df.shape[0] - train_len
     trainset, valset = data.random_split(
-        data_df.values.tolist(), lengths=[train_len, valid_len])
+        data_df.values.tolist(),
+        lengths=[train_len, valid_len]
+    )
 
     return trainset, valset
 

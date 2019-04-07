@@ -8,6 +8,7 @@ IMAGE_EXT = ['jpeg', 'gif', 'png', 'jpg']
 
 
 def main():
+    """Create driving video."""
     parser = argparse.ArgumentParser(description='Create driving video.')
     parser.add_argument(
         'image_folder',

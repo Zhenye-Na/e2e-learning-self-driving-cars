@@ -1,9 +1,8 @@
 """
-CNN model structure.
+CNN model architecture.
 
-@author: Zhenye Na
-@reference: End-to-end Learning.
-
+@author: Zhenye Na - https://github.com/Zhenye-Na
+@reference: "End to End Learning for Self-Driving Cars", arXiv:1604.07316
 """
 
 import torch.nn as nn

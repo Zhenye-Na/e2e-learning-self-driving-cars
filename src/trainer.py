@@ -1,4 +1,8 @@
-"""Trainer."""
+"""Trainer.
+
+@author: Zhenye Na - https://github.com/Zhenye-Na
+@reference: "End to End Learning for Self-Driving Cars", arXiv:1604.07316
+"""
 
 import os
 import torch
