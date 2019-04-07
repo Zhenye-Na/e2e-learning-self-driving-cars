@@ -76,7 +76,8 @@ class Trainer(object):
 
                 if local_batch % 100 == 0:
 
-                    print("Training Epoch: {} | Loss: {}".format(epoch, train_loss / (local_batch + 1)))
+                    print("Training Epoch: {} | Loss: {}".format(
+                        epoch, train_loss / (local_batch + 1)))
 
             # Validation
             self.model.eval()
@@ -98,7 +99,8 @@ class Trainer(object):
                         valid_loss += loss.data.item()
 
                     if local_batch % 100 == 0:
-                        print("Validation Loss: {}".format(valid_loss / (local_batch + 1)))
+                        print("Validation Loss: {}".format(
+                            valid_loss / (local_batch + 1)))
 
             print()
 

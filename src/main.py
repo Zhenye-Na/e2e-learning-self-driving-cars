@@ -8,7 +8,7 @@ import torch.optim as optim
 
 from torch.optim.lr_scheduler import MultiStepLR
 
-from model import NetworkNvidia, NetworkLight
+from model import NetworkNvidia, NetworkLight, NetworkLSTM
 from trainer import Trainer
 from utils import load_data, data_loader
 
@@ -18,21 +18,22 @@ def parse_args():
     parser = argparse.ArgumentParser(description='Main pipeline for self-driving vehicles simulation using machine learning.')
 
     # directory
-    parser.add_argument('--dataroot',     type=str,   default="../../track2data/", help='path to dataset')
-    parser.add_argument('--ckptroot',     type=str,   default="./",       help='path to checkpoint')
+    parser.add_argument('--dataroot',     type=str,   default="../dataset/", help='path to dataset')
+    parser.add_argument('--ckptroot',     type=str,   default="./",          help='path to checkpoint')
 
     # hyperparameters settings
-    parser.add_argument('--lr',           type=float, default=1e-4,       help='learning rate')
-    parser.add_argument('--weight_decay', type=float, default=1e-5,       help='weight decay (L2 penalty)')
-    parser.add_argument('--batch_size',   type=int,   default=32,         help='training batch size')
-    parser.add_argument('--num_workers',  type=int,   default=8,          help='# of workers used in dataloader')
-    parser.add_argument('--train_size',   type=float, default=0.8,        help='train validation set split ratio')
-    parser.add_argument('--shuffle',      type=bool,  default=True,       help='whether shuffle data during training')
+    parser.add_argument('--lr',           type=float, default=1e-4,          help='learning rate')
+    parser.add_argument('--weight_decay', type=float, default=1e-5,          help='weight decay (L2 penalty)')
+    parser.add_argument('--batch_size',   type=int,   default=32,            help='training batch size')
+    parser.add_argument('--num_workers',  type=int,   default=8,             help='# of workers used in dataloader')
+    parser.add_argument('--train_size',   type=float, default=0.8,           help='train validation set split ratio')
+    parser.add_argument('--shuffle',      type=bool,  default=True,          help='whether shuffle data during training')
 
     # training settings
-    parser.add_argument('--epochs',       type=int,   default=40,         help='number of epochs to train')
-    parser.add_argument('--start_epoch',  type=int,   default=0,          help='pre-trained epochs')
-    parser.add_argument('--resume',       type=bool,  default=False,      help='whether re-training from ckpt')
+    parser.add_argument('--epochs',       type=int,   default=60,            help='number of epochs to train')
+    parser.add_argument('--start_epoch',  type=int,   default=0,             help='pre-trained epochs')
+    parser.add_argument('--resume',       type=bool,  default=True,          help='whether re-training from ckpt')
+    parser.add_argument('--model_name',   type=str,   default="nvidia",      help='model architecture to use [nvidia, light]')
 
     # parse the arguments
     args = parser.parse_args()
@@ -48,42 +49,6 @@ def main():
     # load trainig set and split
     trainset, valset = load_data(args.dataroot, args.train_size)
 
-    # ------------------ Oringinally ------------------
-
-    # samples = []
-    # with open(args.dataroot + "driving_log.csv") as csvfile:
-    #     reader = csv.reader(csvfile)
-    #     next(reader, None)
-    #     for line in reader:
-    #         samples.append(line)
-
-    # # Divide the data into training set and validation set
-    # train_len = int(0.8 * len(samples))
-    # valid_len = len(samples) - train_len
-    # train_samples, validation_samples = data.random_split(
-    #     samples, lengths=[train_len, valid_len])
-
-    # ------------------ Oringinally ------------------
-
-    # Creating generator using the dataloader to parallasize the process
-    # transformations = transforms.Compose(
-    #     [transforms.Lambda(lambda x: (x / 127.5) - 1.0)])
-
-    # # Load training data and validation data
-    # training_set = TripletDataset(train_set, transformations)
-    # training_generator = DataLoader(training_set,
-    #                                 batch_size=args.batch_size,
-    #                                 shuffle=args.shuffle,
-    #                                 num_workers=args.num_workers)
-
-    # validation_set = TripletDataset(val_set, transformations)
-    # validation_generator = DataLoader(validation_set,
-    #                                   batch_size=args.batch_size,
-    #                                   shuffle=args.shuffle,
-    #                                   num_workers=args.num_workers)
-
-    # ------------------ Oringinally ------------------
-
     print("==> Preparing dataset ...")
     trainloader, validationloader = data_loader(args.dataroot,
                                                 trainset, valset,
@@ -93,8 +58,10 @@ def main():
 
     # define model
     print("==> Initialize model ...")
-    # model = NetworkNvidia()
-    model = NetworkLight()
+    if args.model_name == "nvidia":
+        model = NetworkNvidia()
+    elif args.model_name == "light":
+        model = NetworkLight()
 
     # define optimizer and criterion
     optimizer = optim.Adam(model.parameters(),
@@ -109,10 +76,10 @@ def main():
     if args.resume:
         print("==> Loading checkpoint ...")
         # use pre-trained model
-        checkpoint = torch.load("model-10.h5",
+        checkpoint = torch.load("model.h5",
                                 map_location=lambda storage, loc: storage)
 
-        print("==> Loading checkpoint model-10.h5 successfully ...")
+        print("==> Loading checkpoint model successfully ...")
         args.start_epoch = checkpoint['epoch']
         model.load_state_dict(checkpoint['state_dict'])
         optimizer.load_state_dict(checkpoint['optimizer'])

@@ -18,12 +18,11 @@ def toDevice(datas, device):
 
 
 def load_data(data_dir, train_size):
-    """Load training data and train validation split"""
-    pass
-
+    """Load training data and train-validation split."""
     # reads CSV file into a single dataframe variable
     data_df = pd.read_csv(os.path.join(data_dir, 'driving_log.csv'),
-                          names=['center', 'left', 'right', 'steering', 'throttle', 'reverse', 'speed'])
+                          names=['center', 'left', 'right', 'steering',
+                                 'throttle', 'reverse', 'speed'])
 
     # Divide the data into training set and validation set
     train_len = int(train_size * data_df.shape[0])

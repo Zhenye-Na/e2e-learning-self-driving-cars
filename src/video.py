@@ -1,3 +1,5 @@
+"""Create driving video."""
+
 from moviepy.editor import ImageSequenceClip
 import argparse
 import os

@@ -92,16 +92,3 @@ class NetworkLight(nn.Module):
         output = output.view(output.size(0), -1)
         output = self.linear_layers(output)
         return output
-
-
-class NetworkLSTM(object):
-    """NetworkLSTM."""
-
-    def __init__(self, arg):
-        """Initialization."""
-        super(NetworkLSTM, self).__init__()
-        self.arg = arg
-
-    def forward(self):
-        """Forward pass."""
-        pass

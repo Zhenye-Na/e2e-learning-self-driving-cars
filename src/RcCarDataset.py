@@ -25,13 +25,16 @@ def augment(dataroot, imgName, angle):
 
 
 class TripletDataset(data.Dataset):
+    """Image pair dataset."""
 
     def __init__(self, dataroot, samples, transform=None):
+        """Initialization."""
         self.samples = samples
         self.dataroot = dataroot
         self.transform = transform
 
     def __getitem__(self, index):
+        """Get image."""
         batch_samples  = self.samples[index]
         steering_angle = float(batch_samples[3])
 
@@ -46,4 +49,5 @@ class TripletDataset(data.Dataset):
         return (center_img, steering_angle_center), (left_img, steering_angle_left), (right_img, steering_angle_right)
 
     def __len__(self):
+        """Length of dataset."""
         return len(self.samples)

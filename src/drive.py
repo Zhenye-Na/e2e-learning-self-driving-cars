@@ -18,6 +18,7 @@ from io import BytesIO
 import torch
 from torch.autograd import Variable
 import torchvision.transforms as transforms
+
 from model import *
 
 sio = socketio.Server()
@@ -78,21 +79,19 @@ def telemetry(sid, data):
 
         image_array = np.array(image.copy())
         image_array = image_array[65:-25, :, :]
+
         # transform RGB to BGR for cv2
-        image_array = image_array[:, :, ::-1]#.copy()
+        image_array = image_array[:, :, ::-1]
         image_array = transformations(image_array)
         image_tensor = torch.Tensor(image_array)
-        # print(image.shape)
         image_tensor = image_tensor.view(1, 3, 70, 320)
         image_tensor = Variable(image_tensor)
-        # print(image.shape)
 
         steering_angle = model(image_tensor).view(-1).data.numpy()[0]
 
-        # onringinally
         # throttle = controller.update(float(speed))
 
-        # ---------------------------- By Siraj ---------------------------- #
+        # ----------------------- Improved by Siraj ----------------------- #
         # global speed_limit
         # if speed > speed_limit:
         #     speed_limit = MIN_SPEED
@@ -100,10 +99,11 @@ def telemetry(sid, data):
         #     speed_limit = MAX_SPEED
 
         throttle = 1.2 - steering_angle ** 2 - (speed / set_speed) ** 2
-        # ---------------------------- By Siraj ---------------------------- #
+        # ----------------------- Improved by Siraj ----------------------- #
 
         send_control(steering_angle, throttle)
-        print("Steering angle: {} | Throttle: {}".format(steering_angle, throttle))
+        print("Steering angle: {} | Throttle: {}".format(
+            steering_angle, throttle))
 
         # save frame
         if args.image_folder != '':
@@ -151,6 +151,7 @@ if __name__ == '__main__':
     # define model
     # model = NetworkLight()
     model = NetworkNvidia()
+    # model = NetworkLSTM()
 
     # check that model version is same as local PyTorch version
     try:
@@ -159,7 +160,8 @@ if __name__ == '__main__':
         model.load_state_dict(checkpoint['state_dict'])
 
     except KeyError:
-        checkpoint = torch.load(args.model, map_location=lambda storage, loc: storage)
+        checkpoint = torch.load(
+            args.model, map_location=lambda storage, loc: storage)
         model = checkpoint['model']
 
     except RuntimeError:
