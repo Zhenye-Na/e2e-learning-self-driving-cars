@@ -53,12 +53,17 @@ We will use Python as the primary programming language and [PyTorch](https://pyt
 
 I have already hosted training data (including track 1 and track 2 individually) in Kaggle dataset and Floydhub. Feel free to download:
 
-- [Kaggle]()
+- [Kaggle](https://www.kaggle.com/zaynena/selfdriving-car-simulator) together with [starter code](https://www.kaggle.com/zaynena/self-driving-car-simulation-demo)
 - [Floydhub](https://www.floydhub.com/zhenye/datasets/self-driving-sim)
 
+
+|         Left        |         Center        |         Right        |
+|:-------------------:|:---------------------:|:--------------------:|
+| ![](./img/left.jpg) | ![](./img/center.jpg) | ![](./img/right.jpg) |
+
+
 <div align="center">
-  <img src="./img/pair.png" width="">
-  <p>Image pair from left, center and right</p>
+  <p>image pair from left, center and right</p>
 </div><br>
 
 
@@ -351,7 +356,7 @@ True
 
 |             ![](./img/loss1.png)            |             ![](./img/loss2.png)            |
 |:-------------------------------------------:|:-------------------------------------------:|
-| Training loss vs Validation loss in track 1 | Training loss vs Validation loss in track 1 |
+| Training loss vs Validation loss in track 1 | Training loss vs Validation loss in track 2 |
 
 
 
