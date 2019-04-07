@@ -17,6 +17,7 @@
     - [Training](#training)
         - [Local machine](#local-machine)
         - [Google Colab host](#google-colab-host)
+        - [Kaggle kernel](#kaggle-kernel)
     - [Evaluation](#evaluation)
     - [Create videos](#create-videos)
 - [Project Overview](#project-overview)
@@ -126,6 +127,10 @@ python3 main.py --epochs=50 --resume=True
 
 if you prefer to use Colab as training platform, feel free to use [`train.ipynb`](./src/train.ipynb) script. Make sure you have already uploaded training data to Google Drive.
 
+
+#### Kaggle kernel
+
+Kaggle also provides GPU support in its own kernel. Feel free to use [this](https://www.kaggle.com/zaynena/self-driving-car-simulation-demo) as the start code.
 
 
 ### Evaluation
