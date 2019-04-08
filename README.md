@@ -28,7 +28,7 @@
         - [Model architecture](#model-architecture)
         - [Hyper-parameters](#hyper-parameters)
 - [FAQ](#faq)
-- [Result](#result)
+- [Experimental result](#experimental-result)
     - [Training loss vs Validation loss](#training-loss-vs-validation-loss)
     - [Demo videos](#demo-videos)
 - [References](#references)
@@ -63,9 +63,6 @@ I have already hosted training data (including track 1 and track 2 individually)
 | ![](./img/left.jpg) | ![](./img/center.jpg) | ![](./img/right.jpg) |
 
 
-<div align="center">
-  <p>image pair from left, center and right</p>
-</div><br>
 
 
 ## Usage
@@ -75,9 +72,10 @@ Download this repo.
 
 ```
 git clone https://github.com/Zhenye-Na/self-driving-vehicles-sim-with-ml.git
-    
+
 cd self-driving-vehicles-sim-with-ml/src
 ```
+
 
 
 ### Training
@@ -123,14 +121,19 @@ python3 main.py --epochs=50 --resume=True
 ```
 
 
+
 #### Google Colab host
 
 if you prefer to use Colab as training platform, feel free to use [`train.ipynb`](./src/train.ipynb) script. Make sure you have already uploaded training data to Google Drive.
 
 
+
+
 #### Kaggle kernel
 
 Kaggle also provides GPU support in its own kernel. Feel free to use [this](https://www.kaggle.com/zaynena/self-driving-car-simulation-demo) as the start code.
+
+
 
 
 ### Evaluation
@@ -187,7 +190,7 @@ optional arguments:
 ```
 
 
-An example of test usage is shown as follows:
+An example of creating video usage is shown as follows:
 
 ```
 python3 video.py runs1/ --fps 48
@@ -215,8 +218,6 @@ Click **`RECORD`** button on the right corner and select a directory as the fold
 <div align="center">
   <img src="./img/select-folder.png" width="80%">
 </div><br>
-
-
 Click **`RECORD`** again and move your car smoothly and carefully.
 
 
@@ -284,14 +285,14 @@ Fully connected: neurons: 1 (output)
 
 #### Hyper-parameters
 
-|  Hyper-parameters |              Description             |
-|:-----------------:|:------------------------------------:|
-|      lr=1e-4      |             learning rate            |
-| weight_decay=1e-5 |       weight decay (L2 penalty)      |
-|   batch_size=32   |          training batch size         |
-|   num_workers=8   |   \# of workers used in dataloader   |
-|   train_size=0.8  |   train-validation set split ratio   |
-|    shuffle=True   | whether shuffle data during training |
+| Hyper-parameters  |              Description               |
+| :---------------: | :------------------------------------: |
+|      lr=1e-4      |             learning rate              |
+| weight_decay=1e-5 |       weight decay (L2 penalty)        |
+|   batch_size=32   |          training batch size           |
+|   num_workers=8   |    \# of workers used in dataloader    |
+|  train_size=0.8   |    train-validation set split ratio    |
+|   shuffle=True    | whether shuffling data during training |
 
 
 
@@ -303,7 +304,7 @@ Fully connected: neurons: 1 (output)
 
 This error means that you are trying to load a newer version of model checkpoint in an older version of PyTorch.
 
-Check your PyTorch version:
+Check PyTorch version in your local machine:
 
 ```python
 import pytorch
@@ -348,15 +349,16 @@ True
 ```
 
 
-## Result
+## Experimental result
 
 
 ### Training loss vs Validation loss
 
 <div align="center">
-  <img src="./img/loss3.png" width="70%">
+  <img src="./img/loss3.png" width="80%">
   <p>Training loss vs Validation loss</p>
 </div>
+
 
 
 |             ![](./img/loss1.png)            |             ![](./img/loss2.png)            |
@@ -378,7 +380,7 @@ True
 
 - [ ] Edge detection pre-processing
 - [ ] Data augmentation (more)
-- [ ] Add "autonomous mode" captured image into training set
+- [ ] Add "autonomous mode" images into training set
 
 
 
