@@ -151,7 +151,6 @@ if __name__ == '__main__':
     # define model
     # model = NetworkLight()
     model = NetworkNvidia()
-    # model = NetworkLSTM()
 
     # check that model version is same as local PyTorch version
     try:

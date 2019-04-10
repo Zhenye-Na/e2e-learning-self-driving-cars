@@ -75,7 +75,7 @@ def main():
     criterion = nn.MSELoss()
 
     # learning rate scheduler
-    scheduler = MultiStepLR(optimizer, milestones=[30, 80], gamma=0.1)
+    scheduler = MultiStepLR(optimizer, milestones=[30, 50], gamma=0.1)
 
     # resume
     if args.resume:
