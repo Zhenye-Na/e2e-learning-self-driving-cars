@@ -64,7 +64,6 @@ I have already hosted training data (including track 1 and track 2 individually)
 
 
 
-
 ## Usage
 
 Download this repo.
@@ -75,7 +74,6 @@ git clone https://github.com/Zhenye-Na/self-driving-vehicles-sim-with-ml.git
 
 cd self-driving-vehicles-sim-with-ml/src
 ```
-
 
 
 ### Training
@@ -121,19 +119,14 @@ python3 main.py --epochs=50 --resume=True
 ```
 
 
-
 #### Google Colab host
 
 if you prefer to use Colab as training platform, feel free to use [`train.ipynb`](./src/train.ipynb) script. Make sure you have already uploaded training data to Google Drive.
 
 
-
-
 #### Kaggle kernel
 
 Kaggle also provides GPU support in its own kernel. Feel free to use [this](https://www.kaggle.com/zaynena/self-driving-car-simulation-demo) as the start code.
-
-
 
 
 ### Evaluation
@@ -163,6 +156,7 @@ An example of test usage is shown as follows:
 ```
 python3 drive.py model.h5 runs1/
 ```
+
 
 #### Tracks
 
@@ -197,7 +191,6 @@ python3 video.py runs1/ --fps 48
 ```
 
 
-
 ## Project Overview
 
 ### 1. Prepare training data
@@ -218,10 +211,9 @@ Click **`RECORD`** button on the right corner and select a directory as the fold
 <div align="center">
   <img src="./img/select-folder.png" width="80%">
 </div><br>
-Click **`RECORD`** again and move your car smoothly and carefully.
 
 
-After you have completed recording your move, the training data will be stored in the folder you selected. Here I suggest you record at least 3 laps of the race. The first lap of race, please try best to stay at the center of the road, the rest could be either on the left hand side and right hand side of the road separately.
+Click **`RECORD`** again and move your car smoothly and carefully. After you have completed recording your move, the training data will be stored in the folder you selected. Here I suggest you record at least 3 laps of the race. The first lap of race, please try best to stay at the center of the road, the rest could be either on the left hand side and right hand side of the road separately.
 
 
 - `/IMG/` - recorded images from cneter, left and right cameras.
@@ -389,7 +381,6 @@ True
 
 [1] Nvidia research, [End to End Learning for Self-Driving Cars](https://arxiv.org/pdf/1604.07316v1.pdf)  
 [2] Self-driving car simulator developed by [Udacity](https://www.udacity.com/course/self-driving-car-engineer-nanodegree--nd013) with Unity  
-
 
 
 * * *
