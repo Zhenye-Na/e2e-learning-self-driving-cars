@@ -253,7 +253,8 @@ After you have completed recording your move, the training data will be stored i
 
 <div align="center">
   <img src="./img/training-config.png" width="80%">
-</div><br>
+</div>
+
 
 
 ### 4. Model architecture and hyper-parameters
