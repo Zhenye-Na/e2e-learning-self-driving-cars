@@ -363,9 +363,9 @@ True
 ### Demo videos
 
 
-|                                                         Track 1                                                         |                                                         Track 2                                                         |
-|:-----------------------------------------------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------------------------------:|
-| [![Watch the video](https://img.youtube.com/vi/xIm6FR_8fm8/hqdefault.jpg)](https://www.youtube.com/watch?v=xIm6FR_8fm8) | [![Watch the video](https://img.youtube.com/vi/vp2ECcXOcWg/hqdefault.jpg)](https://www.youtube.com/watch?v=vp2ECcXOcWg) |
+|                                                         Track 1                                                         |                                                         Track 2                                                         |                                                         Track 3                                                         |
+|:-----------------------------------------------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------------------------------:|
+| [![Watch the video](https://img.youtube.com/vi/xIm6FR_8fm8/hqdefault.jpg)](https://www.youtube.com/watch?v=xIm6FR_8fm8) | [![Watch the video](https://img.youtube.com/vi/vp2ECcXOcWg/hqdefault.jpg)](https://www.youtube.com/watch?v=vp2ECcXOcWg) | [![Watch the video](https://img.youtube.com/vi/qe-zkH3rDrg/hqdefault.jpg)](https://www.youtube.com/watch?v=qe-zkH3rDrg) |
 
 
 
