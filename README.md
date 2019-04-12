@@ -4,7 +4,8 @@
   <img src="./img/driverless-car.png" width="10%">
 </p>
 
-> Please install [Open in Colab](https://chrome.google.com/webstore/detail/open-in-colab/iogfkhleblhcpcekbiedikdehleodpjo) extension in Google Chrome in order to open a Github-hosted notebook in Google Colab with one-click.
+> 1. Please install [Open in Colab](https://chrome.google.com/webstore/detail/open-in-colab/iogfkhleblhcpcekbiedikdehleodpjo) extension in Google Chrome in order to open a Github-hosted notebook in Google Colab with one-click.
+> 2. Personally, I recommend using Kaggle kernel directly to explore the dataset, instead of downloading the dataset to local machine, if you do not have a powerful GPU.
 
 
 
@@ -46,8 +47,8 @@ We will use Python as the primary programming language and [PyTorch](https://pyt
 
 
 1. Self-driving car simulator developed by [Udacity](https://www.udacity.com/course/self-driving-car-engineer-nanodegree--nd013) with Unity. Download [here](https://github.com/udacity/self-driving-car-sim)
-2. Install [PyTorch environment](https://pytorch.org/get-started/locally/) in your local machine.
-3. Register account in [Google Colab](https://colab.research.google.com/) (if you do not have GPU and would love to utilize the power of GPU, please try this and be sure to enable `GPU` as accelerator)
+2. Install [PyTorch environment](https://pytorch.org/get-started/locally/) (latest version the best) in your local machine.
+3. Log in [Google Colab](https://colab.research.google.com/) (if you do not have GPU and would love to utilize the power of GPU, please try this and be sure to enable `GPU` as accelerator)
 
 
 ## Dataset
@@ -87,6 +88,7 @@ usage: main.py [-h] [--dataroot DATAROOT] [--ckptroot CKPTROOT] [--lr LR]
                [--num_workers NUM_WORKERS] [--train_size TRAIN_SIZE]
                [--shuffle SHUFFLE] [--epochs EPOCHS]
                [--start_epoch START_EPOCH] [--resume RESUME]
+               [--model_name MODEL_NAME]
 
 Main pipeline for self-driving vehicles simulation using machine learning.
 
@@ -100,7 +102,7 @@ optional arguments:
   --batch_size BATCH_SIZE
                         training batch size
   --num_workers NUM_WORKERS
-                        number of workers in dataloader
+                        # of workers used in dataloader
   --train_size TRAIN_SIZE
                         train validation set split ratio
   --shuffle SHUFFLE     whether shuffle data during training
@@ -198,19 +200,22 @@ python3 video.py runs1/ --fps 48
 Once you have installed the self-driving car simulator, you will find there are 2 different tracks in the simulator. The second one is much harder to deal with. Please choose the terrain you like and make sure that you select **`TRAINING MODE`**. 
 
 <div align="center">
-  <img src="./img/main-menu.png" width="80%">
+  <img src="./img/main-menu.png" width="60%">
 </div><br>
+
 
 Click **`RECORD`** button on the right corner and select a directory as the folder to save your training image and driving log information.
 
 <div align="center">
-  <img src="./img/recording.png" width="80%">
+  <img src="./img/recording.png" width="60%">
 </div><br>
+
 
 
 <div align="center">
-  <img src="./img/select-folder.png" width="80%">
+  <img src="./img/select-folder.png" width="60%">
 </div><br>
+
 
 
 Click **`RECORD`** again and move your car smoothly and carefully. After you have completed recording your move, the training data will be stored in the folder you selected. Here I suggest you record at least 3 laps of the race. The first lap of race, please try best to stay at the center of the road, the rest could be either on the left hand side and right hand side of the road separately.
@@ -239,13 +244,15 @@ Click **`RECORD`** again and move your car smoothly and carefully. After you hav
 ### 3. Training neural network
 
 <div align="center">
-  <img src="./img/training.png" width="80%">
+  <img src="./img/training.png" width="70%">
 </div><br>
 
 
+
 <div align="center">
-  <img src="./img/training-config.png" width="80%">
+  <img src="./img/training-config.png" width="70%">
 </div>
+
 
 
 
@@ -255,8 +262,9 @@ Click **`RECORD`** again and move your car smoothly and carefully. After you hav
 #### Model architecture
 
 <div align="center">
-  <img src="./img/model-achitecture.png" width="80%">
+  <img src="./img/model-achitecture.png" width="70%">
 </div><br>
+
 
 
 ```
@@ -318,28 +326,7 @@ accelerator = cuda_output[0] if exists('/dev/nvidia0') else 'cpu'
 !pip install -q http://download.pytorch.org/whl/{accelerator}/torch-0.4.1-{platform}-linux_x86_64.whl torchvision
 ```
 
-If it is not working, trying to use the following codes instead to install PyTorch `0.4.1`, for example.
 
-
-```python
-from os import path
-from wheel.pep425tags import get_abbr_impl, get_impl_ver, get_abi_tag
-platform = '{}{}-{}'.format(get_abbr_impl(), get_impl_ver(), get_abi_tag())
-
-accelerator = 'cu80' if path.exists('/opt/bin/nvidia-smi') else 'cpu'
-
-!pip install -q http://download.pytorch.org/whl/{accelerator}/torch-0.4.1-{platform}-linux_x86_64.whl torchvision
-import torch
-print(torch.__version__)
-print(torch.cuda.is_available())
-```
-
-```
-Output:
-
-0.4.1
-True
-```
 
 
 ## Experimental result
@@ -348,9 +335,10 @@ True
 ### Training loss vs Validation loss
 
 <div align="center">
-  <img src="./img/loss3.png" width="80%">
+  <img src="./img/loss3.png" width="90%">
   <p>Training loss vs Validation loss</p>
 </div>
+
 
 
 
@@ -372,8 +360,10 @@ True
 ## Future work
 
 - [ ] Edge detection pre-processing
-- [ ] Data augmentation (more)
+- [ ] Use Joystick instead of Keyboard to create more "continuous" dataset
 - [ ] Add "autonomous mode" images into training set
+- [ ] Predict $\Delta_\text{steering angle}$ instead of $\theta_{\text{steering angle}}$
+- [ ] Take "velocity" into account
 
 
 
@@ -381,7 +371,6 @@ True
 
 [1] Nvidia research, [End to End Learning for Self-Driving Cars](https://arxiv.org/pdf/1604.07316v1.pdf)  
 [2] Self-driving car simulator developed by [Udacity](https://www.udacity.com/course/self-driving-car-engineer-nanodegree--nd013) with Unity  
-
 
 * * *
 
