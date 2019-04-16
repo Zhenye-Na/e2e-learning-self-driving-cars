@@ -53,9 +53,9 @@ We will use Python as the primary programming language and [PyTorch](https://pyt
 
 ## Dataset
 
-I have already hosted training data (including track 1 and track 2 individually) in Kaggle dataset and Floydhub. Feel free to download:
+I have already uploaded training images in Kaggle and Floydhub. Feel free to download:
 
-- [Kaggle](https://www.kaggle.com/zaynena/selfdriving-car-simulator) together with [starter code](https://www.kaggle.com/zaynena/self-driving-car-simulation-demo)
+- [Kaggle](https://www.kaggle.com/zaynena/selfdriving-car-simulator) together with [starter code](https://www.kaggle.com/zaynena/self-driving-car-simulation-demo) and pre-trained models
 - [Floydhub](https://www.floydhub.com/zhenye/datasets/self-driving-sim)
 
 
@@ -193,6 +193,7 @@ python3 video.py runs1/ --fps 48
 ```
 
 
+
 ## Project Overview
 
 ### 1. Prepare training data
@@ -225,6 +226,7 @@ Click **`RECORD`** again and move your car smoothly and carefully. After you hav
 - `driving_log.csv` - saved the image information and associated information like steer angle, current speed, throttle and brake.
 
 
+
 ### 2. Project code structure
 
 
@@ -239,6 +241,7 @@ Click **`RECORD`** again and move your car smoothly and carefully. After you hav
 ├── utils.py                # Helper functions
 └── video.py                # Create videos
 ```
+
 
 
 ### 3. Training neural network
@@ -336,8 +339,9 @@ accelerator = cuda_output[0] if exists('/dev/nvidia0') else 'cpu'
 
 <div align="center">
   <img src="./img/loss3.png" width="90%">
-  <p>Training loss vs Validation loss</p>
+  <p>Training loss vs Validation loss (generalized)</p>
 </div>
+
 
 
 
