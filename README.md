@@ -343,18 +343,17 @@ accelerator = cuda_output[0] if exists('/dev/nvidia0') else 'cpu'
 ### Training loss vs Validation loss
 
 <div align="center">
-  <img src="./img/loss3.png" width="90%">
+  <img src="./img/loss1.png" width="90%">
   <p>Training loss vs Validation loss (generalized)</p>
 </div>
 
 
+### Training loss vs Validation loss (Denoised)
 
-
-
-|             ![](./img/loss1.png)            |             ![](./img/loss2.png)            |
-|:-------------------------------------------:|:-------------------------------------------:|
-| Training loss vs Validation loss in track 1 | Training loss vs Validation loss in track 2 |
-
+<div align="center">
+  <img src="./img/loss2.png" width="90%">
+  <p>Training loss vs Validation loss (denoised)</p>
+</div>
 
 
 ### Demo videos
@@ -368,12 +367,11 @@ accelerator = cuda_output[0] if exists('/dev/nvidia0') else 'cpu'
 
 ## Future work
 
-- [ ] Edge detection pre-processing
-- [ ] Use Joystick instead of Keyboard to create more "continuous" dataset
-- [ ] Add "autonomous mode" images into training set
+- [x] Edge detection pre-processing
+- [x] Use Joystick instead of Keyboard to create more "continuous" dataset (denoising input instead)
 - [ ] Predict $\Delta_\text{steering angle}$ instead of $\theta_{\text{steering angle}}$
 - [ ] Take "velocity" into account
-
+- [ ] Add "autonomous mode" images into training set
 
 
 ## References
