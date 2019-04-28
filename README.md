@@ -1,5 +1,10 @@
 # Self-driving Vehicles Simulation using Machine Learning
 
+[![Open Source Love](https://badges.frapsoft.com/os/mit/mit.svg?v=102)](https://github.com/ellerbrock/open-source-badge/)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Zhenye-Na/self-driving-vehicles-sim-with-ml/blob/master/src/train.ipynb)
+[![HitCount](http://hits.dwyl.io/Zhenye-Na/self-driving-vehicles-sim-with-ml.svg)](http://hits.dwyl.io/Zhenye-Na/self-driving-vehicles-sim-with-ml)
+
+
 <p align="center">
   <img src="./img/driverless-car.png" width="10%">
 </p>
