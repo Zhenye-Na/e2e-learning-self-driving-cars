@@ -149,7 +149,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     # define model
-    # model = NetworkLight()
+    # model = LeNet()
     model = NetworkNvidia()
 
     # check that model version is same as local PyTorch version

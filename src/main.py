@@ -38,7 +38,7 @@ def parse_args():
     parser.add_argument('--epochs',       type=int,   default=60,            help='number of epochs to train')
     parser.add_argument('--start_epoch',  type=int,   default=0,             help='pre-trained epochs')
     parser.add_argument('--resume',       type=bool,  default=True,          help='whether re-training from ckpt')
-    parser.add_argument('--model_name',   type=str,   default="nvidia",      help='model architecture to use [nvidia, light]')
+    parser.add_argument('--model_name',   type=str,   default="nvidia",      help='model architecture to use [nvidia, lenet]')
 
     # parse the arguments
     args = parser.parse_args()

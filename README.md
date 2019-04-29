@@ -116,7 +116,7 @@ optional arguments:
                         pre-trained epochs
   --resume RESUME       whether re-training from ckpt
   --model_name MODEL_NAME
-                        model architecture to use [nvidia, light]
+                        model architecture to use [nvidia, lenet]
 ```
 
 An example of training usage is shown as follows:

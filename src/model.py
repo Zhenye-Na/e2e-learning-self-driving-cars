@@ -6,6 +6,7 @@ CNN model architecture.
 """
 
 import torch.nn as nn
+import torch.nn.functional as F
 
 
 class NetworkNvidia(nn.Module):
@@ -63,31 +64,26 @@ class NetworkNvidia(nn.Module):
         return output
 
 
-class NetworkLight(nn.Module):
-    """Custom model."""
+class LeNet(nn.Module):
+    """LeNet architecture."""
 
     def __init__(self):
-        """Initialize CNN Network."""
-        super(NetworkLight, self).__init__()
-        self.conv_layers = nn.Sequential(
-            nn.Conv2d(3, 24, 3, stride=2),
-            nn.ELU(),
-            nn.Conv2d(24, 48, 3, stride=2),
-            nn.MaxPool2d(4, stride=4),
-            nn.Dropout(p=0.25)
-        )
-        self.linear_layers = nn.Sequential(
-            nn.Linear(in_features=48 * 4 * 19, out_features=50),
-            nn.ELU(),
-            nn.Linear(in_features=50, out_features=10),
-            nn.Linear(in_features=10, out_features=1)
-        )
+        """Initialization."""
+        super(LeNet, self).__init__()
+        self.conv1 = nn.Conv2d(3, 6, 5)
+        self.conv2 = nn.Conv2d(6, 16, 5)
+        self.fc1   = nn.Linear(16*5*5, 120)
+        self.fc2   = nn.Linear(120, 84)
+        self.fc3   = nn.Linear(84, 10)
 
-    def forward(self, input):
+    def forward(self, x):
         """Forward pass."""
-        input = input.view(input.size(0), 3, 70, 320)
-        output = self.conv_layers(input)
-        # print(output.shape)
-        output = output.view(output.size(0), -1)
-        output = self.linear_layers(output)
-        return output
+        out = F.relu(self.conv1(x))
+        out = F.max_pool2d(out, 2)
+        out = F.relu(self.conv2(out))
+        out = F.max_pool2d(out, 2)
+        out = out.view(out.size(0), -1)
+        out = F.relu(self.fc1(out))
+        out = F.relu(self.fc2(out))
+        out = self.fc3(out)
+        return out
