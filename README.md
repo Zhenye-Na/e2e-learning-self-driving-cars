@@ -36,6 +36,7 @@
 - [FAQ](#faq)
 - [Experimental result](#experimental-result)
     - [Training loss vs Validation loss](#training-loss-vs-validation-loss)
+    - [Training loss vs Validation loss (Smoothed)](#training-loss-vs-validation-loss-smoothed)
     - [Demo videos](#demo-videos)
 - [References](#references)
 
@@ -348,7 +349,9 @@ accelerator = cuda_output[0] if exists('/dev/nvidia0') else 'cpu'
 </div>
 
 
-### Training loss vs Validation loss (Denoised)
+### Training loss vs Validation loss (Smoothed)
+
+Applied a [Savitzky-Golay filter](https://en.wikipedia.org/wiki/Savitzky%E2%80%93Golay_filter) to the steering angle column. This helps reduce the training loss because original signal for steering angle input is via keyboard which is very dicrete.
 
 <div align="center">
   <img src="./img/loss2.png" width="90%">
