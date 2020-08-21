@@ -1,4 +1,4 @@
-# Self-driving Vehicles Simulation using Machine Learning
+# End-to-End Learning for Self-Driving Cars | Udacity's simulation env
 
 [![Open Source Love](https://badges.frapsoft.com/os/mit/mit.svg?v=102)](https://github.com/ellerbrock/open-source-badge/)
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Zhenye-Na/self-driving-vehicles-sim-with-ml/blob/master/src/train.ipynb)
