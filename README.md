@@ -336,7 +336,27 @@ accelerator = cuda_output[0] if exists('/dev/nvidia0') else 'cpu'
 ```
 
 
+### The car didn't move in autonomous mode (Windows)
 
+> Thanks for [@quliang93](https://github.com/quliang93) to point this out
+
+1. Make sure Unity is installed correctly. Udacity self-driving simulator is build with unity, so you have to install it.
+2. Make sure the version of socket is compatible
+
+```
+pip install Flask-SocketIO==4.3.1
+pip install python-engineio==3.13.2
+pip install python-socketio==4.6.0
+```
+
+Belows are the steps to run `drive.py` in Windows:
+
+- run command: `python drive.py model.h5`
+- open the Udacity simulator, and choose autonomous mode
+
+If everything is configured properly, you would see the car move.
+
+> In case if you still have the problem, feel free to start a thread in https://github.com/Zhenye-Na/e2e-learning-self-driving-cars/issues/3
 
 ## Experimental result
 
