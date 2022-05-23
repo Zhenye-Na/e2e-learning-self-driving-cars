@@ -340,7 +340,7 @@ Applied a [Savitzky-Golay filter](https://en.wikipedia.org/wiki/Savitzky%E2%80%9
 
 ## References
 
-[1] Nvidia research, [End to End Learning for Self-Driving Cars](https://arxiv.org/pdf/1604.07316v1.pdf)  
+[1] Nvidia research, [End to End Learning for Self-Driving Cars](https://arxiv.org/pdf/1604.07316v1.pdf)
 [2] Self-driving car simulator developed by [Udacity](https://www.udacity.com/course/self-driving-car-engineer-nanodegree--nd013) with Unity
 
 ---
